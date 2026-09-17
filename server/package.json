@@ -19,7 +19,8 @@
     "multer": "*",
     "pdf-parse": "*",
     "puppeteer": "*",
-    "uuid": "*"
+    "uuid": "*",
+    "typescript": "^5.7.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
