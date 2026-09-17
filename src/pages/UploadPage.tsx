@@ -70,38 +70,38 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-16">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white mb-4">Upload Existing CV</h1>
-        <p className="text-gray-400">
-          We'll parse your PDF, DOCX, or text and accurately extract your data into the ATS builder.
+    <div className="max-w-3xl mx-auto px-4 py-8 sm:py-16">
+      <div className="text-center mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Upload Existing CV</h1>
+        <p className="text-sm sm:text-base text-gray-400 max-w-lg mx-auto">
+          We'll parse your PDF, DOCX, or pasted text and accurately extract your data into the ATS builder.
         </p>
       </div>
 
       {/* Mode Switcher */}
-      <div className="flex justify-center mb-8">
-        <div className="inline-flex rounded-xl bg-gray-900 p-1 border border-gray-800">
+      <div className="flex justify-center mb-6 sm:mb-8">
+        <div className="flex w-full max-w-md rounded-xl bg-gray-900 p-1 border border-gray-800">
           <button
             onClick={() => setMode('file')}
-            className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all ${
               mode === 'file'
-                ? 'bg-blue-600 text-white shadow-lg'
+                ? 'bg-blue-600 text-white shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            <FileUp className="w-4 h-4" />
-            Upload File (PDF / DOCX)
+            <FileUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Upload File</span>
           </button>
           <button
             onClick={() => setMode('text')}
-            className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 sm:px-4 rounded-lg text-xs sm:text-sm font-medium transition-all ${
               mode === 'text'
-                ? 'bg-blue-600 text-white shadow-lg'
+                ? 'bg-blue-600 text-white shadow-md'
                 : 'text-gray-400 hover:text-white'
             }`}
           >
-            <FileText className="w-4 h-4" />
-            Paste Text
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Paste Text</span>
           </button>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function UploadPage() {
       {mode === 'file' ? (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
+          className={`border-2 border-dashed rounded-xl p-8 sm:p-12 text-center cursor-pointer transition-colors ${
             isDragActive
               ? 'border-blue-500 bg-blue-900/10'
               : file
@@ -120,26 +120,26 @@ export default function UploadPage() {
           <input {...getInputProps()} />
           {file ? (
             <div className="flex flex-col items-center">
-              <CheckCircle2 className="w-12 h-12 text-green-500 mb-4" />
-              <p className="text-white font-medium text-lg">{file.name}</p>
-              <p className="text-gray-400 mt-2 text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+              <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-green-500 mb-3" />
+              <p className="text-white font-medium text-base sm:text-lg break-all">{file.name}</p>
+              <p className="text-gray-400 mt-1 text-xs sm:text-sm">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <FileUp className="w-12 h-12 text-gray-500 mb-4" />
-              <p className="text-white font-medium text-lg mb-2">Drag & drop your file here</p>
-              <p className="text-gray-400 text-sm">Supported formats: PDF, DOCX, DOC (Max 15MB)</p>
+              <FileUp className="w-10 h-10 sm:w-12 sm:h-12 text-gray-500 mb-3" />
+              <p className="text-white font-medium text-base sm:text-lg mb-1">Upload or Drag & Drop CV</p>
+              <p className="text-gray-400 text-xs sm:text-sm">Supported formats: PDF, DOCX, DOC (Max 15MB)</p>
             </div>
           )}
         </div>
       ) : (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6">
+          <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-2">
             Paste your complete CV text below
           </label>
           <textarea
-            rows={12}
-            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-mono"
+            rows={10}
+            className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm font-mono resize-y"
             placeholder="Paste your CV content here (Name, Contact, Experience, Education, Skills, Projects...)"
             value={rawText}
             onChange={(e) => setRawText(e.target.value)}
@@ -148,23 +148,23 @@ export default function UploadPage() {
       )}
 
       {(file || (mode === 'text' && rawText.trim().length > 0)) && (
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-3">
           <button
             onClick={() => {
               setFile(null)
               setRawText('')
             }}
-            className="px-6 py-2 rounded-lg font-medium text-gray-400 hover:text-white bg-gray-900 hover:bg-gray-800 transition-colors"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-lg font-medium text-xs sm:text-sm text-gray-400 hover:text-white bg-gray-900 hover:bg-gray-800 transition-colors order-2 sm:order-1"
           >
             Clear
           </button>
           <button
             onClick={handleUpload}
             disabled={loading}
-            className="flex items-center gap-2 px-6 py-2 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-lg shadow-blue-900/30"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-medium text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-lg shadow-blue-900/30 order-1 sm:order-2"
           >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <File className="w-5 h-5" />}
-            {loading ? 'Analyzing & Extracting with AI...' : 'Extract Data & Open Builder'}
+            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <File className="w-4 h-4" />}
+            <span>{loading ? 'Analyzing with AI...' : 'Extract Data & Open Builder'}</span>
           </button>
         </div>
       )}

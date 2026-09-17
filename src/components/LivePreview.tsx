@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CVData } from '../types/cv'
 import { getTemplate, TEMPLATES } from '../templates'
 import { useCVStore } from '../store/cvStore'
@@ -10,7 +10,29 @@ interface Props {
 
 export default function LivePreview({ cvData }: Props) {
   const { updateCV } = useCVStore()
-  const [zoom, setZoom] = useState<number>(0.55)
+  
+  // Calculate best initial zoom based on viewport width
+  const getInitialZoom = () => {
+    if (typeof window === 'undefined') return 0.55
+    const width = window.innerWidth
+    if (width < 450) return 0.40
+    if (width < 768) return 0.46
+    return 0.55
+  }
+
+  const [zoom, setZoom] = useState<number>(getInitialZoom())
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Auto-fit zoom if screen changed
+      if (window.innerWidth < 450 && zoom > 0.45) {
+        setZoom(0.40)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [zoom])
+
   const activeTemplateId = cvData.settings.template || 'classic-ats'
   const templateConfig = getTemplate(activeTemplateId)
   const TemplateComponent = templateConfig.component
@@ -18,10 +40,10 @@ export default function LivePreview({ cvData }: Props) {
   return (
     <div className="flex flex-col h-full bg-gray-900 overflow-hidden">
       {/* Top Controls: Template Switcher & Zoom */}
-      <div className="p-2.5 border-b border-gray-800 bg-gray-950 flex flex-col gap-2 shrink-0">
+      <div className="p-2 sm:p-2.5 border-b border-gray-800 bg-gray-950 flex flex-col gap-2 shrink-0">
         {/* Template Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider pl-1 pr-1 shrink-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-pan-x">
+          <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider pl-1 pr-1 shrink-0">
             Template:
           </span>
           {TEMPLATES.map((t) => (
@@ -43,22 +65,22 @@ export default function LivePreview({ cvData }: Props) {
         <div className="flex justify-between items-center pt-1 border-t border-gray-800/60 text-xs text-gray-400">
           <div className="flex items-center gap-1">
             <button
-              onClick={() => setZoom((z) => Math.max(0.35, +(z - 0.1).toFixed(2)))}
+              onClick={() => setZoom((z) => Math.max(0.25, +(z - 0.05).toFixed(2)))}
               className="p-1 hover:bg-gray-800 hover:text-white rounded transition"
               title="Zoom Out"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
-            <span className="px-1.5 font-mono text-[11px]">{Math.round(zoom * 100)}%</span>
+            <span className="px-1 font-mono text-[11px]">{Math.round(zoom * 100)}%</span>
             <button
-              onClick={() => setZoom((z) => Math.min(1.2, +(z + 0.1).toFixed(2)))}
+              onClick={() => setZoom((z) => Math.min(1.2, +(z + 0.05).toFixed(2)))}
               className="p-1 hover:bg-gray-800 hover:text-white rounded transition"
               title="Zoom In"
             >
               <ZoomIn className="w-3.5 h-3.5" />
             </button>
             <button
-              onClick={() => setZoom(0.55)}
+              onClick={() => setZoom(getInitialZoom())}
               className="p-1 hover:bg-gray-800 hover:text-white rounded transition ml-1"
               title="Fit to Screen"
             >
@@ -67,7 +89,7 @@ export default function LivePreview({ cvData }: Props) {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[11px] text-gray-500 font-medium">A4 Preview</span>
+            <span className="text-[10px] sm:text-[11px] text-gray-500 font-medium">A4 Preview</span>
             <button
               onClick={() => window.print()}
               className="flex items-center gap-1 text-gray-300 hover:text-white px-2 py-1 bg-gray-800 hover:bg-gray-700 rounded transition text-xs"
@@ -81,9 +103,9 @@ export default function LivePreview({ cvData }: Props) {
       </div>
 
       {/* Scaled A4 Preview Container */}
-      <div className="flex-1 overflow-auto p-4 flex justify-center items-start bg-gray-950/40">
+      <div className="flex-1 overflow-auto p-2 sm:p-4 flex justify-center items-start bg-gray-950/40">
         <div
-          className="bg-white shadow-2xl origin-top transition-transform duration-150"
+          className="bg-white shadow-2xl origin-top transition-transform duration-150 shrink-0"
           style={{
             width: '210mm',
             minHeight: '297mm',
