@@ -6,6 +6,9 @@ import DashboardPage from './pages/DashboardPage'
 import BuilderPage from './pages/BuilderPage'
 import UploadPage from './pages/UploadPage'
 import TemplatesPage from './pages/TemplatesPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsPage from './pages/TermsPage'
+import AboutPage from './pages/AboutPage'
 import ErrorBoundary from './components/ErrorBoundary'
 
 export default function App() {
@@ -20,6 +23,9 @@ export default function App() {
             <Route path="/builder" element={<BuilderPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/templates" element={<TemplatesPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
         <Footer />
