@@ -15,44 +15,69 @@ export default function DownloadMenu() {
     const a = document.createElement('a')
     a.href = url
     a.download = filename
+    document.body.appendChild(a)
     a.click()
-    URL.revokeObjectURL(url)
+    setTimeout(() => {
+      if (document.body.contains(a)) {
+        document.body.removeChild(a)
+      }
+      URL.revokeObjectURL(url)
+    }, 1000)
   }
 
   const handleDownload = async (type: 'pdf' | 'docx') => {
     if (!cv) return
     setLoading(type)
     const toastId = toast.loading(`Generating your ${type.toUpperCase()}...`)
+    const filename = `${(cv.personal?.name || 'CV').replace(/\s+/g, '_')}_CV.${type}`
 
     try {
       if (type === 'pdf') {
-        // Try server-side generation first
+        let downloaded = false
+
+        // 1. High-fidelity client-side PDF export (instant, exact template match)
         try {
-          const blob = await generatePDF(cv)
-          downloadBlob(blob, `${(cv.personal?.name || 'CV').replace(/\s+/g, '_')}_CV.pdf`)
-          toast.success('Downloaded PDF successfully!', { id: toastId })
-          setOpen(false)
-          return
-        } catch (serverErr) {
-          console.warn('Server PDF generation unavailable, using client-side engine...', serverErr)
+          const blob = await generateClientPDF(cv)
+          if (blob && blob.size > 5000) {
+            downloadBlob(blob, filename)
+            downloaded = true
+          }
+        } catch (clientErr) {
+          console.warn('Client-side PDF generation error, trying server engine...', clientErr)
         }
 
-        // Seamless high-fidelity client-side PDF export fallback
-        await generateClientPDF(cv)
-        toast.success('Downloaded PDF successfully!', { id: toastId })
-        setOpen(false)
+        // 2. Server-side PDF export fallback
+        if (!downloaded) {
+          try {
+            const serverBlob = await generatePDF(cv)
+            if (serverBlob && serverBlob.size > 5000 && serverBlob.type !== 'application/json') {
+              downloadBlob(serverBlob, filename)
+              downloaded = true
+            }
+          } catch (serverErr) {
+            console.warn('Server-side PDF generation unavailable...', serverErr)
+          }
+        }
+
+        if (downloaded) {
+          toast.success('Downloaded PDF successfully!', { id: toastId })
+          setOpen(false)
+        } else {
+          // 3. Ultimate print fallback
+          toast.error('Direct download failed. Opening print dialog to save as PDF...', { id: toastId })
+          window.print()
+        }
       } else {
         // DOCX download
         const blob = await generateDOCX(cv)
-        downloadBlob(blob, `${(cv.personal?.name || 'CV').replace(/\s+/g, '_')}_CV.docx`)
+        downloadBlob(blob, filename)
         toast.success('Downloaded DOCX successfully!', { id: toastId })
         setOpen(false)
       }
     } catch (e: any) {
       console.error('Download error:', e)
-      // Ultimate fallback for PDF: trigger browser print
       if (type === 'pdf') {
-        toast.error('Direct download failed. Opening print dialog...', { id: toastId })
+        toast.error('Direct download failed. Opening print dialog to save as PDF...', { id: toastId })
         window.print()
       } else {
         toast.error(`Failed to generate ${type.toUpperCase()}`, { id: toastId })
