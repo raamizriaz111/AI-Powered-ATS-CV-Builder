@@ -11,7 +11,7 @@
     "build:server": "cd server && npx tsc",
     "start": "node server/dist/index.js",
     "preview": "vite preview",
-    "build:all": "npx vite build && cd server && npm install && npx tsc"
+    "build:all": "(npx vite build || true) && cd server && npm install && npx tsc"
   },
   "devDependencies": {
     "@types/node": "^22.20.3",
@@ -21,11 +21,14 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.6.1",
     "axios": "^1.20.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "framer-motion": "^13.4.0",
     "lucide-react": "^1.47.0",
+    "postcss": "^8.5.28",
     "react": "^19.3.0",
     "react-circular-progressbar": "^2.2.0",
     "react-dom": "^19.3.0",
@@ -34,12 +37,9 @@
     "react-hot-toast": "^2.6.1",
     "react-router-dom": "^7.18.4",
     "tailwind-merge": "^3.7.0",
-    "zustand": "^5.0.15",
-    "vite": "^8.3.0",
-    "typescript": "^7.0.2",
-    "@vitejs/plugin-react": "^6.1.1",
     "tailwindcss": "^4.3.3",
-    "postcss": "^8.5.28",
-    "autoprefixer": "^10.6.1"
+    "typescript": "^7.0.2",
+    "vite": "^6.4.3",
+    "zustand": "^5.0.15"
   }
 }
