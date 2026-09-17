@@ -1,0 +1,43 @@
+{
+  "name": "ats-cv-builder",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ATS CV Builder — Build. Optimize. Get Hired.",
+  "scripts": {
+    "dev": "concurrently -n \"client,server\" -c \"cyan,green\" \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "vite",
+    "dev:server": "cd server && npx tsx watch src/index.ts",
+    "build": "vite build",
+    "build:server": "cd server && npx tsc",
+    "start": "node server/dist/index.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "axios": "^1.20.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
+    "framer-motion": "^13.4.0",
+    "lucide-react": "^1.47.0",
+    "react": "^19.3.0",
+    "react-circular-progressbar": "^2.2.0",
+    "react-dom": "^19.3.0",
+    "react-dropzone": "^20.1.2",
+    "react-hook-form": "^7.88.0",
+    "react-hot-toast": "^2.6.1",
+    "react-router-dom": "^7.18.4",
+    "tailwind-merge": "^3.7.0",
+    "zustand": "^5.0.15"
+  }
+}
