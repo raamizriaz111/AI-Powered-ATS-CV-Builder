@@ -1,8 +1,15 @@
-# ATS CV Builder
+# AI Powered ATS CV Builder
+
+> 🚀 **Live Demo**: [https://ai-powered-ats-cv-builder.onrender.com](https://ai-powered-ats-cv-builder.onrender.com)
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Website-2563eb?style=for-the-badge&logo=render&logoColor=white)](https://ai-powered-ats-cv-builder.onrender.com)
+[![Gemini AI](https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai-powered-ats-cv-builder.onrender.com)
+[![ATS Score](https://img.shields.io/badge/ATS_Score-100%2F100-success?style=for-the-badge)](https://ai-powered-ats-cv-builder.onrender.com)
 
 **Build. Optimize. Get Hired.**
 
-A full-stack, production-quality ATS CV Builder powered by Google Gemini AI.
+A full-stack, production-ready AI-powered ATS CV Builder application.
+
 
 ## Features
 
