@@ -524,7 +524,15 @@ export async function generatePDFFromHTML(html: string): Promise<Buffer> {
   const puppeteer = pModule.default || pModule;
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process'
+    ]
   })
   try {
     const page = await browser.newPage()
