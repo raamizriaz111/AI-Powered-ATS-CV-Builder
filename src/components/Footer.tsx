@@ -17,11 +17,8 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigation Links */}
+          {/* Legal & Company Links */}
           <div className="flex flex-wrap justify-center md:justify-end gap-x-8 gap-y-3 text-xs sm:text-sm font-medium text-gray-400">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-            <Link to="/templates" className="hover:text-white transition-colors">Templates</Link>
-            <Link to="/builder" className="hover:text-white transition-colors">Build CV</Link>
             <Link to="/about" className="hover:text-white transition-colors">About & Contact</Link>
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
