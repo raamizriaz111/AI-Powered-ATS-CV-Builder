@@ -12,7 +12,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         fontSize: `${s.fontSize}pt`,
         lineHeight: s.lineSpacing,
         display: 'flex',
-        minHeight: '100%',
+        minHeight: '297mm',
         color: '#2d3748',
         backgroundColor: '#fff',
         boxSizing: 'border-box'
@@ -22,23 +22,23 @@ export default function Modern({ cv }: { cv: CVData }) {
       <div
         style={{
           width: '34%',
+          minWidth: '34%',
           backgroundColor: accent,
           color: '#ffffff',
-          padding: `${s.margins}in`,
+          padding: `${Math.min(s.margins || 0.6, 0.45)}in`,
           boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px'
+          minHeight: '100%'
         }}
       >
-        <div>
+        <div style={{ marginBottom: '20px' }}>
           <h1
             style={{
               fontSize: `${s.headingSize + 6}pt`,
               fontWeight: 'bold',
               margin: '0 0 6px 0',
               lineHeight: 1.1,
-              letterSpacing: '-0.5px'
+              letterSpacing: '-0.5px',
+              wordBreak: 'break-word'
             }}
           >
             {p.name || 'Your Name'}
@@ -51,7 +51,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         </div>
 
         {/* Contact */}
-        <div>
+        <div style={{ marginBottom: '20px' }}>
           <h4
             style={{
               fontSize: `${s.fontSize + 1}pt`,
@@ -65,19 +65,19 @@ export default function Modern({ cv }: { cv: CVData }) {
           >
             Contact
           </h4>
-          <div style={{ fontSize: `${s.fontSize - 0.5}pt`, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            {p.email && <div>✉ {p.email}</div>}
-            {p.phone && <div>☎ {p.phone}</div>}
-            {p.location && <div>📍 {p.location}</div>}
-            {p.linkedin && <div>in {p.linkedin}</div>}
-            {p.github && <div>⚡ {p.github}</div>}
-            {p.portfolio && <div>🌐 {p.portfolio}</div>}
+          <div style={{ fontSize: `${s.fontSize - 0.5}pt` }}>
+            {p.email && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>✉ {p.email}</div>}
+            {p.phone && <div style={{ marginBottom: '6px' }}>☎ {p.phone}</div>}
+            {p.location && <div style={{ marginBottom: '6px' }}>📍 {p.location}</div>}
+            {p.linkedin && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>in {p.linkedin}</div>}
+            {p.github && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>⚡ {p.github}</div>}
+            {p.portfolio && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>🌐 {p.portfolio}</div>}
           </div>
         </div>
 
         {/* Skills */}
         {cv.skills.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <h4
               style={{
                 fontSize: `${s.fontSize + 1}pt`,
@@ -96,7 +96,7 @@ export default function Modern({ cv }: { cv: CVData }) {
                 <div style={{ fontWeight: 600, fontSize: `${s.fontSize - 0.5}pt`, marginBottom: '4px' }}>
                   {cat.name}
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {cat.skills.map((skill, i) => (
                     <span
                       key={i}
@@ -104,7 +104,10 @@ export default function Modern({ cv }: { cv: CVData }) {
                         backgroundColor: 'rgba(255,255,255,0.18)',
                         padding: '2px 8px',
                         borderRadius: '4px',
-                        fontSize: `${s.fontSize - 1.5}pt`
+                        fontSize: `${s.fontSize - 1.5}pt`,
+                        marginRight: '4px',
+                        marginBottom: '4px',
+                        display: 'inline-block'
                       }}
                     >
                       {skill}
@@ -118,7 +121,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Languages */}
         {cv.languages.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <h4
               style={{
                 fontSize: `${s.fontSize + 1}pt`,
@@ -144,7 +147,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Certifications in sidebar */}
         {cv.certifications.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <h4
               style={{
                 fontSize: `${s.fontSize + 1}pt`,
@@ -177,15 +180,12 @@ export default function Modern({ cv }: { cv: CVData }) {
         style={{
           width: '66%',
           padding: `${s.margins}in`,
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '18px'
+          boxSizing: 'border-box'
         }}
       >
         {/* Profile */}
         {cv.summary && (
-          <div>
+          <div style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,
@@ -204,7 +204,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Work Experience */}
         {cv.experience.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,
@@ -243,7 +243,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Projects */}
         {cv.projects.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,
@@ -277,7 +277,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Education */}
         {cv.education.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,
@@ -313,7 +313,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Awards & Custom */}
         {cv.awards.length > 0 && (
-          <div>
+          <div style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,
@@ -335,7 +335,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         )}
 
         {cv.customSections.map((sec) => (
-          <div key={sec.id}>
+          <div key={sec.id} style={{ marginBottom: '18px' }}>
             <h2
               style={{
                 fontSize: `${s.headingSize}pt`,

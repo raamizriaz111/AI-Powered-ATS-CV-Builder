@@ -42,20 +42,17 @@ export default function Technical({ cv }: { cv: CVData }) {
               textAlign: 'right',
               fontSize: `${s.fontSize - 1}pt`,
               fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-              color: '#475569',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2px'
+              color: '#475569'
             }}
           >
-            {p.email && <div>{p.email}</div>}
-            {p.phone && <div>{p.phone}</div>}
-            {p.location && <div>{p.location}</div>}
+            {p.email && <div style={{ marginBottom: '2px' }}>{p.email}</div>}
+            {p.phone && <div style={{ marginBottom: '2px' }}>{p.phone}</div>}
+            {p.location && <div style={{ marginBottom: '2px' }}>{p.location}</div>}
           </div>
         </div>
 
         {/* Links bar with code badge style */}
-        <div style={{ display: 'flex', gap: '12px', marginTop: '8px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', marginTop: '8px', flexWrap: 'wrap' }}>
           {p.github && (
             <span
               style={{
@@ -65,7 +62,9 @@ export default function Technical({ cv }: { cv: CVData }) {
                 border: '1px solid #cbd5e1',
                 padding: '2px 8px',
                 borderRadius: '4px',
-                color: '#0f172a'
+                color: '#0f172a',
+                marginRight: '8px',
+                marginBottom: '4px'
               }}
             >
               gh: {p.github}
@@ -80,7 +79,9 @@ export default function Technical({ cv }: { cv: CVData }) {
                 border: '1px solid #cbd5e1',
                 padding: '2px 8px',
                 borderRadius: '4px',
-                color: '#0f172a'
+                color: '#0f172a',
+                marginRight: '8px',
+                marginBottom: '4px'
               }}
             >
               li: {p.linkedin}
@@ -95,7 +96,8 @@ export default function Technical({ cv }: { cv: CVData }) {
                 border: '1px solid #cbd5e1',
                 padding: '2px 8px',
                 borderRadius: '4px',
-                color: '#0f172a'
+                color: '#0f172a',
+                marginBottom: '4px'
               }}
             >
               web: {p.portfolio}
@@ -114,11 +116,10 @@ export default function Technical({ cv }: { cv: CVData }) {
               color: '#0f172a',
               marginBottom: '4px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              alignItems: 'center'
             }}
           >
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Summary
+            <span style={{ color: accent, fontFamily: 'monospace', marginRight: '6px' }}>//</span> Summary
           </div>
           <div style={{ color: '#334155' }}>{cv.summary}</div>
         </div>
@@ -134,16 +135,15 @@ export default function Technical({ cv }: { cv: CVData }) {
               color: '#0f172a',
               marginBottom: '6px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              alignItems: 'center'
             }}
           >
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Technical Stack & Skills
+            <span style={{ color: accent, fontFamily: 'monospace', marginRight: '6px' }}>//</span> Technical Stack & Skills
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div>
             {cv.skills.map((cat) => (
-              <div key={cat.id} style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                <span style={{ fontWeight: 600, minWidth: '150px', color: '#0f172a', fontSize: `${s.fontSize - 0.5}pt` }}>
+              <div key={cat.id} style={{ display: 'flex', alignItems: 'baseline', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, minWidth: '150px', color: '#0f172a', fontSize: `${s.fontSize - 0.5}pt`, marginRight: '8px' }}>
                   {cat.name}:
                 </span>
                 <span
@@ -171,11 +171,10 @@ export default function Technical({ cv }: { cv: CVData }) {
               color: '#0f172a',
               marginBottom: '8px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              alignItems: 'center'
             }}
           >
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Work Experience
+            <span style={{ color: accent, fontFamily: 'monospace', marginRight: '6px' }}>//</span> Work Experience
           </div>
           {cv.experience.map((exp) => (
             <div key={exp.id} style={{ marginBottom: '10px' }}>
@@ -222,18 +221,17 @@ export default function Technical({ cv }: { cv: CVData }) {
               color: '#0f172a',
               marginBottom: '8px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              alignItems: 'center'
             }}
           >
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Projects & Open Source
+            <span style={{ color: accent, fontFamily: 'monospace', marginRight: '6px' }}>//</span> Projects & Open Source
           </div>
           {cv.projects.map((proj) => (
             <div key={proj.id} style={{ marginBottom: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontWeight: 'bold', color: '#0f172a' }}>{proj.name}</span>
-                <div style={{ display: 'flex', gap: '8px', fontSize: '0.85em' }}>
-                  {proj.github && <span style={{ color: accent, fontFamily: 'monospace' }}>[{proj.github}]</span>}
+                <div style={{ display: 'flex', fontSize: '0.85em' }}>
+                  {proj.github && <span style={{ color: accent, fontFamily: 'monospace', marginRight: '8px' }}>[{proj.github}]</span>}
                   {proj.link && <span style={{ color: accent, fontFamily: 'monospace' }}>[{proj.link}]</span>}
                 </div>
               </div>
@@ -265,11 +263,10 @@ export default function Technical({ cv }: { cv: CVData }) {
               color: '#0f172a',
               marginBottom: '6px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              alignItems: 'center'
             }}
           >
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Education
+            <span style={{ color: accent, fontFamily: 'monospace', marginRight: '6px' }}>//</span> Education
           </div>
           {cv.education.map((edu) => (
             <div key={edu.id} style={{ marginBottom: '6px' }}>
@@ -294,9 +291,9 @@ export default function Technical({ cv }: { cv: CVData }) {
 
       {/* Certifications & Languages */}
       {(cv.certifications.length > 0 || cv.languages.length > 0) && (
-        <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', marginBottom: '12px' }}>
           {cv.certifications.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingRight: '12px' }}>
               <div style={{ fontWeight: 'bold', color: '#0f172a', marginBottom: '4px' }}>
                 <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> Certifications
               </div>

@@ -237,9 +237,9 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
 
       {/* Languages & Awards */}
       {(cv.languages.length > 0 || cv.awards.length > 0) && (
-        <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', marginBottom: '12px' }}>
           {cv.languages.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingRight: cv.awards.length > 0 ? '12px' : '0' }}>
               <h2
                 style={{
                   fontSize: `${s.headingSize}pt`,
@@ -256,7 +256,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
             </div>
           )}
           {cv.awards.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingLeft: cv.languages.length > 0 ? '12px' : '0' }}>
               <h2
                 style={{
                   fontSize: `${s.headingSize}pt`,

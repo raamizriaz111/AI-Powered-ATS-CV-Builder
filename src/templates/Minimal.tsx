@@ -34,13 +34,13 @@ export default function Minimal({ cv }: { cv: CVData }) {
             {p.title}
           </div>
         )}
-        <div style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0', display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-          {p.email && <span>{p.email}</span>}
-          {p.phone && <span>{p.phone}</span>}
-          {p.location && <span>{p.location}</span>}
-          {p.linkedin && <span>{p.linkedin}</span>}
-          {p.github && <span>{p.github}</span>}
-          {p.portfolio && <span>{p.portfolio}</span>}
+        <div style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0', display: 'flex', flexWrap: 'wrap' }}>
+          {p.email && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.email}</span>}
+          {p.phone && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.phone}</span>}
+          {p.location && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.location}</span>}
+          {p.linkedin && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.linkedin}</span>}
+          {p.github && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.github}</span>}
+          {p.portfolio && <span style={{ marginRight: '16px', marginBottom: '4px' }}>{p.portfolio}</span>}
         </div>
       </div>
 
@@ -186,10 +186,10 @@ export default function Minimal({ cv }: { cv: CVData }) {
           >
             Skills
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div>
             {cv.skills.map((cat) => (
-              <div key={cat.id} style={{ display: 'flex', gap: '8px' }}>
-                <span style={{ fontWeight: 600, minWidth: '140px', color: '#2d3748' }}>{cat.name}</span>
+              <div key={cat.id} style={{ display: 'flex', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, minWidth: '140px', color: '#2d3748', marginRight: '8px' }}>{cat.name}</span>
                 <span style={{ color: '#4a5568' }}>{cat.skills.join(', ')}</span>
               </div>
             ))}
@@ -199,9 +199,9 @@ export default function Minimal({ cv }: { cv: CVData }) {
 
       {/* Certifications & Languages */}
       {(cv.certifications.length > 0 || cv.languages.length > 0) && (
-        <div style={{ display: 'flex', gap: '30px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', marginBottom: '20px' }}>
           {cv.certifications.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingRight: cv.languages.length > 0 ? '15px' : '0' }}>
               <h3
                 style={{
                   fontSize: `${s.fontSize - 1}pt`,
@@ -222,7 +222,7 @@ export default function Minimal({ cv }: { cv: CVData }) {
             </div>
           )}
           {cv.languages.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingLeft: cv.certifications.length > 0 ? '15px' : '0' }}>
               <h3
                 style={{
                   fontSize: `${s.fontSize - 1}pt`,

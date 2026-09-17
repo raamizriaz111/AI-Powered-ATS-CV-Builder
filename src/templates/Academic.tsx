@@ -242,9 +242,9 @@ export default function Academic({ cv }: { cv: CVData }) {
 
       {/* Certifications & Languages */}
       {(cv.certifications.length > 0 || cv.languages.length > 0) && (
-        <div style={{ display: 'flex', gap: '32px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', marginBottom: '16px' }}>
           {cv.certifications.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingRight: cv.languages.length > 0 ? '16px' : '0' }}>
               <h2
                 style={{
                   fontSize: `${s.headingSize}pt`,
@@ -266,7 +266,7 @@ export default function Academic({ cv }: { cv: CVData }) {
             </div>
           )}
           {cv.languages.length > 0 && (
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, paddingLeft: cv.certifications.length > 0 ? '16px' : '0' }}>
               <h2
                 style={{
                   fontSize: `${s.headingSize}pt`,

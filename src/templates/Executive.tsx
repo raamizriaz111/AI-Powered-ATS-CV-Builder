@@ -60,17 +60,16 @@ export default function Executive({ cv }: { cv: CVData }) {
           display: 'flex',
           justifyContent: 'center',
           flexWrap: 'wrap',
-          gap: '20px',
           fontSize: `${s.fontSize - 1}pt`,
           color: '#475569'
         }}
       >
-        {p.email && <span>✉ {p.email}</span>}
-        {p.phone && <span>☎ {p.phone}</span>}
-        {p.location && <span>📍 {p.location}</span>}
-        {p.linkedin && <span>in {p.linkedin}</span>}
-        {p.github && <span>⚡ {p.github}</span>}
-        {p.portfolio && <span>🌐 {p.portfolio}</span>}
+        {p.email && <span style={{ marginRight: '16px', marginBottom: '2px' }}>✉ {p.email}</span>}
+        {p.phone && <span style={{ marginRight: '16px', marginBottom: '2px' }}>☎ {p.phone}</span>}
+        {p.location && <span style={{ marginRight: '16px', marginBottom: '2px' }}>📍 {p.location}</span>}
+        {p.linkedin && <span style={{ marginRight: '16px', marginBottom: '2px' }}>in {p.linkedin}</span>}
+        {p.github && <span style={{ marginRight: '16px', marginBottom: '2px' }}>⚡ {p.github}</span>}
+        {p.portfolio && <span style={{ marginBottom: '2px' }}>🌐 {p.portfolio}</span>}
       </div>
 
       <div style={{ padding: `${s.margins}in` }}>
@@ -112,9 +111,9 @@ export default function Executive({ cv }: { cv: CVData }) {
             >
               Core Competencies & Skills
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {cv.skills.map((cat) => (
-                <div key={cat.id} style={{ fontSize: `${s.fontSize - 0.5}pt` }}>
+                <div key={cat.id} style={{ width: '50%', paddingRight: '12px', marginBottom: '6px', boxSizing: 'border-box', fontSize: `${s.fontSize - 0.5}pt` }}>
                   <strong style={{ color: accent }}>{cat.name}: </strong>
                   <span>{cat.skills.join(', ')}</span>
                 </div>
@@ -242,9 +241,9 @@ export default function Executive({ cv }: { cv: CVData }) {
 
         {/* Certifications & Languages */}
         {(cv.certifications.length > 0 || cv.languages.length > 0) && (
-          <div style={{ display: 'flex', gap: '32px', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', marginBottom: '16px' }}>
             {cv.certifications.length > 0 && (
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, paddingRight: '16px' }}>
                 <div
                   style={{
                     fontSize: `${s.headingSize - 1}pt`,
