@@ -1,4 +1,3 @@
-import puppeteer from 'puppeteer'
 import { CVData } from '../types/cv'
 
 const fmt = (d: string) => {
@@ -520,6 +519,9 @@ export function buildHTMLTemplate(cv: CVData): string {
 }
 
 export async function generatePDFFromHTML(html: string): Promise<Buffer> {
+  const getPuppeteer = new Function("return import('puppeteer')");
+  const pModule = await getPuppeteer();
+  const puppeteer = pModule.default || pModule;
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
