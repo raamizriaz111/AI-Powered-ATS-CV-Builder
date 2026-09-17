@@ -10,7 +10,8 @@
     "build": "vite build",
     "build:server": "cd server && npx tsc",
     "start": "node server/dist/index.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:all": "vite build && cd server && npm install && npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.20.3",
