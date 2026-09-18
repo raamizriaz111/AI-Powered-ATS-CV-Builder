@@ -13,7 +13,7 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
   const element = React.createElement(TemplateComponent, { cv })
   const htmlMarkup = renderToStaticMarkup(element)
 
-  // Mount offscreen at top:0 left:0 with exact A4 794px width (standard 210mm at 96 DPI)
+  // Mount offscreen at top:0 left:0 with exact A4 210mm width and 297mm minHeight
   // Positioned behind the screen with z-index: -9999 so coordinates are valid for html2canvas
   const container = document.createElement('div')
   container.id = 'cv-client-pdf-render-mount'
@@ -21,7 +21,8 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
     position: fixed;
     top: 0;
     left: 0;
-    width: 794px;
+    width: 210mm;
+    min-height: 297mm;
     background-color: #ffffff;
     color: #000000;
     z-index: -9999;
@@ -35,6 +36,14 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
   document.body.appendChild(container)
 
   try {
+    // Ensure all custom and web fonts are fully loaded before capturing
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      await (document as any).fonts.ready
+    }
+
+    // Brief delay to ensure browser layout and styles have fully painted
+    await new Promise((resolve) => setTimeout(resolve, 60))
+
     // High-resolution rasterization (scale: 2 = 192 DPI, retina-sharp, lossless PNG)
     const canvas = await html2canvas(container, {
       scale: 2,
@@ -43,7 +52,7 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
       logging: false,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: 794
+      windowWidth: container.offsetWidth || 794
     })
 
     const pdf = new jsPDF({

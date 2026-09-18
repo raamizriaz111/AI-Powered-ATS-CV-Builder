@@ -4,6 +4,24 @@ export default function Academic({ cv }: { cv: CVData }) {
   const s = cv.settings
   const p = cv.personal
 
+  const renderSectionHeader = (title: string) => (
+    <div style={{ marginBottom: '8px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          color: '#111827',
+          lineHeight: 'normal'
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '2px 0 0 0' }} />
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -17,7 +35,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '20px', borderBottom: '1px solid #111827', paddingBottom: '12px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
         <h1
           style={{
             fontSize: `${s.headingSize + 8}pt`,
@@ -38,6 +56,7 @@ export default function Academic({ cv }: { cv: CVData }) {
           {[p.location, p.email, p.phone, p.linkedin, p.github, p.portfolio].filter(Boolean).join('   •   ')}
         </div>
       </div>
+      <div style={{ height: '1px', backgroundColor: '#111827', marginBottom: '16px' }} />
 
       {/* Curriculum Vitae Header */}
       <div style={{ textAlign: 'center', fontStyle: 'italic', fontSize: `${s.fontSize - 1}pt`, color: '#6b7280', marginBottom: '16px' }}>
@@ -47,19 +66,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Education First (Traditional Academic Order) */}
       {cv.education.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Education
-          </h2>
+          {renderSectionHeader('Education')}
           {cv.education.map((edu) => (
             <div key={edu.id} style={{ marginBottom: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -83,19 +90,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Research Interests / Summary */}
       {cv.summary && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Research Profile & Summary
-          </h2>
+          {renderSectionHeader('Research Profile & Summary')}
           <div style={{ textAlign: 'justify', lineHeight: 1.5 }}>{cv.summary}</div>
         </div>
       )}
@@ -103,19 +98,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Academic & Professional Appointments / Experience */}
       {cv.experience.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Appointments & Experience
-          </h2>
+          {renderSectionHeader('Appointments & Experience')}
           {cv.experience.map((exp) => (
             <div key={exp.id} style={{ marginBottom: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -145,19 +128,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Projects / Research Projects */}
       {cv.projects.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Research & Technical Projects
-          </h2>
+          {renderSectionHeader('Research & Technical Projects')}
           {cv.projects.map((proj) => (
             <div key={proj.id} style={{ marginBottom: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -189,19 +160,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Areas of Expertise / Skills */}
       {cv.skills.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Areas of Expertise & Skills
-          </h2>
+          {renderSectionHeader('Areas of Expertise & Skills')}
           {cv.skills.map((cat) => (
             <div key={cat.id} style={{ marginBottom: '4px' }}>
               <strong>{cat.name}: </strong>
@@ -214,19 +173,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Honors, Awards & Fellowships */}
       {cv.awards.length > 0 && (
         <div style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            Honors, Awards & Grants
-          </h2>
+          {renderSectionHeader('Honors, Awards & Grants')}
           {cv.awards.map((a) => (
             <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span>
@@ -245,19 +192,7 @@ export default function Academic({ cv }: { cv: CVData }) {
         <div style={{ display: 'flex', marginBottom: '16px' }}>
           {cv.certifications.length > 0 && (
             <div style={{ flex: 1, paddingRight: cv.languages.length > 0 ? '16px' : '0' }}>
-              <h2
-                style={{
-                  fontSize: `${s.headingSize}pt`,
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  letterSpacing: '1px',
-                  borderBottom: '1px solid #d1d5db',
-                  margin: '0 0 8px 0',
-                  paddingBottom: '2px'
-                }}
-              >
-                Certifications
-              </h2>
+              {renderSectionHeader('Certifications')}
               {cv.certifications.map((c) => (
                 <div key={c.id} style={{ marginBottom: '3px' }}>
                   <strong>{c.name}</strong>, {c.issuer} {c.date ? `(${c.date})` : ''}
@@ -267,19 +202,7 @@ export default function Academic({ cv }: { cv: CVData }) {
           )}
           {cv.languages.length > 0 && (
             <div style={{ flex: 1, paddingLeft: cv.certifications.length > 0 ? '16px' : '0' }}>
-              <h2
-                style={{
-                  fontSize: `${s.headingSize}pt`,
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  letterSpacing: '1px',
-                  borderBottom: '1px solid #d1d5db',
-                  margin: '0 0 8px 0',
-                  paddingBottom: '2px'
-                }}
-              >
-                Languages
-              </h2>
+              {renderSectionHeader('Languages')}
               <div>{cv.languages.map((l) => `${l.name} (${l.proficiency})`).join(', ')}</div>
             </div>
           )}
@@ -289,19 +212,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {/* Publications / Custom Sections */}
       {cv.customSections.map((sec) => (
         <div key={sec.id} style={{ marginBottom: '16px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid #d1d5db',
-              margin: '0 0 8px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            {sec.title}
-          </h2>
+          {renderSectionHeader(sec.title)}
           <ul style={{ margin: 0, paddingLeft: '20px' }}>
             {sec.entries.map((e) => (
               <li key={e.id} style={{ marginBottom: '3px' }}>

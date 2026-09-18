@@ -5,6 +5,24 @@ export default function Executive({ cv }: { cv: CVData }) {
   const p = cv.personal
   const accent = s.accentColor || '#1e3a8a'
 
+  const renderSectionHeader = (title: string, borderBottomWidth: string = '2px') => (
+    <div style={{ marginBottom: '8px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          color: accent,
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          lineHeight: 'normal'
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: borderBottomWidth, backgroundColor: accent, margin: '2px 0 0 0' }} />
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -12,11 +30,11 @@ export default function Executive({ cv }: { cv: CVData }) {
         fontSize: `${s.fontSize}pt`,
         lineHeight: s.lineSpacing,
         color: '#1a202c',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         boxSizing: 'border-box'
       }}
     >
-      {/* Executive Header Banner */}
+      {/* Top Banner Header */}
       <div
         style={{
           backgroundColor: accent,
@@ -27,11 +45,12 @@ export default function Executive({ cv }: { cv: CVData }) {
       >
         <h1
           style={{
-            fontSize: `${s.headingSize + 10}pt`,
+            fontSize: `${s.headingSize + 9}pt`,
             fontWeight: 'bold',
-            letterSpacing: '1px',
-            margin: '0 0 6px 0',
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            letterSpacing: '1.5px',
+            margin: '0 0 4px 0',
+            lineHeight: 1.1
           }}
         >
           {p.name || 'Your Full Name'}
@@ -41,8 +60,8 @@ export default function Executive({ cv }: { cv: CVData }) {
             style={{
               fontSize: `${s.fontSize + 2}pt`,
               fontWeight: 300,
-              letterSpacing: '2px',
               textTransform: 'uppercase',
+              letterSpacing: '2px',
               opacity: 0.95
             }}
           >
@@ -55,7 +74,6 @@ export default function Executive({ cv }: { cv: CVData }) {
       <div
         style={{
           backgroundColor: '#f8fafc',
-          borderBottom: '1px solid #e2e8f0',
           padding: '8px 32px',
           display: 'flex',
           justifyContent: 'center',
@@ -71,25 +89,13 @@ export default function Executive({ cv }: { cv: CVData }) {
         {p.github && <span style={{ marginRight: '16px', marginBottom: '2px' }}>⚡ {p.github}</span>}
         {p.portfolio && <span style={{ marginBottom: '2px' }}>🌐 {p.portfolio}</span>}
       </div>
+      <div style={{ height: '1px', backgroundColor: '#e2e8f0' }} />
 
       <div style={{ padding: `${s.margins}in` }}>
         {/* Executive Summary */}
         {cv.summary && (
           <div style={{ marginBottom: '18px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '8px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-            >
-              Executive Profile
-            </div>
+            {renderSectionHeader('Executive Profile')}
             <div style={{ textAlign: 'justify', color: '#334155' }}>{cv.summary}</div>
           </div>
         )}
@@ -97,20 +103,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Core Competencies / Skills */}
         {cv.skills.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '8px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-            >
-              Core Competencies & Skills
-            </div>
+            {renderSectionHeader('Core Competencies & Skills')}
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
               {cv.skills.map((cat) => (
                 <div key={cat.id} style={{ width: '50%', paddingRight: '12px', marginBottom: '6px', boxSizing: 'border-box', fontSize: `${s.fontSize - 0.5}pt` }}>
@@ -125,20 +118,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Professional Experience */}
         {cv.experience.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '10px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-            >
-              Professional Experience
-            </div>
+            {renderSectionHeader('Professional Experience')}
             {cv.experience.map((exp) => (
               <div key={exp.id} style={{ marginBottom: '14px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
@@ -170,20 +150,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Selected Projects */}
         {cv.projects.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '10px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-            >
-              Key Initiatives & Projects
-            </div>
+            {renderSectionHeader('Key Initiatives & Projects')}
             {cv.projects.map((proj) => (
               <div key={proj.id} style={{ marginBottom: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -204,20 +171,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Education */}
         {cv.education.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '8px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px'
-              }}
-            >
-              Education & Credentials
-            </div>
+            {renderSectionHeader('Education & Credentials')}
             {cv.education.map((edu) => (
               <div key={edu.id} style={{ marginBottom: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -244,19 +198,7 @@ export default function Executive({ cv }: { cv: CVData }) {
           <div style={{ display: 'flex', marginBottom: '16px' }}>
             {cv.certifications.length > 0 && (
               <div style={{ flex: 1, paddingRight: '16px' }}>
-                <div
-                  style={{
-                    fontSize: `${s.headingSize - 1}pt`,
-                    fontWeight: 'bold',
-                    color: accent,
-                    borderBottom: `1px solid ${accent}`,
-                    paddingBottom: '2px',
-                    marginBottom: '6px',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  Certifications
-                </div>
+                {renderSectionHeader('Certifications', '1px')}
                 {cv.certifications.map((c) => (
                   <div key={c.id} style={{ marginBottom: '4px' }}>
                     <strong>{c.name}</strong> – {c.issuer} {c.date ? `(${c.date})` : ''}
@@ -266,19 +208,7 @@ export default function Executive({ cv }: { cv: CVData }) {
             )}
             {cv.languages.length > 0 && (
               <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: `${s.headingSize - 1}pt`,
-                    fontWeight: 'bold',
-                    color: accent,
-                    borderBottom: `1px solid ${accent}`,
-                    paddingBottom: '2px',
-                    marginBottom: '6px',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  Languages
-                </div>
+                {renderSectionHeader('Languages', '1px')}
                 <div>{cv.languages.map((l) => `${l.name} (${l.proficiency})`).join('  •  ')}</div>
               </div>
             )}
@@ -288,19 +218,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Awards */}
         {cv.awards.length > 0 && (
           <div style={{ marginBottom: '16px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize - 1}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `1px solid ${accent}`,
-                paddingBottom: '2px',
-                marginBottom: '6px',
-                textTransform: 'uppercase'
-              }}
-            >
-              Honors & Accolades
-            </div>
+            {renderSectionHeader('Honors & Accolades', '1px')}
             {cv.awards.map((a) => (
               <div key={a.id} style={{ marginBottom: '4px' }}>
                 <strong>{a.title}</strong> – {a.issuer} {a.date ? `(${a.date})` : ''}
@@ -313,19 +231,7 @@ export default function Executive({ cv }: { cv: CVData }) {
         {/* Custom Sections */}
         {cv.customSections.map((sec) => (
           <div key={sec.id} style={{ marginBottom: '16px' }}>
-            <div
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                paddingBottom: '3px',
-                marginBottom: '6px',
-                textTransform: 'uppercase'
-              }}
-            >
-              {sec.title}
-            </div>
+            {renderSectionHeader(sec.title)}
             <ul style={{ margin: 0, paddingLeft: '20px', color: '#334155' }}>
               {sec.entries.map((e) => (
                 <li key={e.id}>{e.text}</li>

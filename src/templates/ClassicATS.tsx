@@ -4,6 +4,24 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
   const s = cv.settings
   const p = cv.personal
 
+  const renderSectionHeader = (title: string) => (
+    <div style={{ marginBottom: '6px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px',
+          color: '#000',
+          lineHeight: 'normal'
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '1.5px', backgroundColor: '#000', margin: '2px 0 0 0' }} />
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -42,19 +60,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Summary */}
       {cv.summary && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 4px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Professional Summary
-          </h2>
+          {renderSectionHeader('Professional Summary')}
           <div style={{ textAlign: 'justify' }}>{cv.summary}</div>
         </div>
       )}
@@ -62,19 +68,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Experience */}
       {cv.experience.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Work Experience
-          </h2>
+          {renderSectionHeader('Work Experience')}
           {cv.experience.map((exp) => (
             <div key={exp.id} style={{ marginBottom: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -104,19 +98,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Education */}
       {cv.education.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Education
-          </h2>
+          {renderSectionHeader('Education')}
           {cv.education.map((edu) => (
             <div key={edu.id} style={{ marginBottom: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -141,19 +123,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Skills */}
       {cv.skills.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Technical & Professional Skills
-          </h2>
+          {renderSectionHeader('Technical & Professional Skills')}
           {cv.skills.map((cat) => (
             <div key={cat.id} style={{ marginBottom: '4px' }}>
               <strong style={{ display: 'inline-block', minWidth: '160px' }}>{cat.name}:</strong>
@@ -166,19 +136,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Projects */}
       {cv.projects.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Projects
-          </h2>
+          {renderSectionHeader('Projects')}
           {cv.projects.map((proj) => (
             <div key={proj.id} style={{ marginBottom: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
@@ -210,19 +168,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Certifications */}
       {cv.certifications.length > 0 && (
         <div style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Certifications
-          </h2>
+          {renderSectionHeader('Certifications')}
           {cv.certifications.map((c) => (
             <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
               <span>
@@ -240,35 +186,13 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
         <div style={{ display: 'flex', marginBottom: '12px' }}>
           {cv.languages.length > 0 && (
             <div style={{ flex: 1, paddingRight: cv.awards.length > 0 ? '12px' : '0' }}>
-              <h2
-                style={{
-                  fontSize: `${s.headingSize}pt`,
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  borderBottom: '1.5px solid #000',
-                  margin: '0 0 6px 0',
-                  paddingBottom: '2px'
-                }}
-              >
-                Languages
-              </h2>
+              {renderSectionHeader('Languages')}
               <div>{cv.languages.map((l) => `${l.name} (${l.proficiency})`).join('  •  ')}</div>
             </div>
           )}
           {cv.awards.length > 0 && (
             <div style={{ flex: 1, paddingLeft: cv.languages.length > 0 ? '12px' : '0' }}>
-              <h2
-                style={{
-                  fontSize: `${s.headingSize}pt`,
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  borderBottom: '1.5px solid #000',
-                  margin: '0 0 6px 0',
-                  paddingBottom: '2px'
-                }}
-              >
-                Honors & Awards
-              </h2>
+              {renderSectionHeader('Honors & Awards')}
               {cv.awards.map((a) => (
                 <div key={a.id} style={{ marginBottom: '3px' }}>
                   <strong>{a.title}</strong>
@@ -283,18 +207,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       {/* Custom Sections */}
       {cv.customSections.map((sec) => (
         <div key={sec.id} style={{ marginBottom: '12px' }}>
-          <h2
-            style={{
-              fontSize: `${s.headingSize}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              borderBottom: '1.5px solid #000',
-              margin: '0 0 6px 0',
-              paddingBottom: '2px'
-            }}
-          >
-            {sec.title}
-          </h2>
+          {renderSectionHeader(sec.title)}
           <ul style={{ margin: '4px 0 0 0', paddingLeft: '20px' }}>
             {sec.entries.map((e) => (
               <li key={e.id}>{e.text}</li>

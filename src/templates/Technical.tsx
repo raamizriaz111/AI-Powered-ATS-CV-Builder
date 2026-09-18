@@ -18,7 +18,7 @@ export default function Technical({ cv }: { cv: CVData }) {
       }}
     >
       {/* Technical Header */}
-      <div style={{ borderBottom: `2px solid ${accent}`, paddingBottom: '12px', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
           <div>
             <h1
@@ -104,6 +104,7 @@ export default function Technical({ cv }: { cv: CVData }) {
             </span>
           )}
         </div>
+        <div style={{ height: '2px', backgroundColor: accent, margin: '12px 0 0 0' }} />
       </div>
 
       {/* Summary */}

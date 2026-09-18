@@ -5,6 +5,41 @@ export default function Modern({ cv }: { cv: CVData }) {
   const p = cv.personal
   const accent = s.accentColor || '#2563eb'
 
+  const renderSidebarHeader = (title: string) => (
+    <div style={{ marginBottom: '10px' }}>
+      <div
+        style={{
+          fontSize: `${s.fontSize + 1}pt`,
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          color: '#ffffff',
+          lineHeight: 'normal'
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '4px 0 0 0' }} />
+    </div>
+  )
+
+  const renderMainHeader = (title: string) => (
+    <div style={{ marginBottom: '10px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          color: accent,
+          letterSpacing: '0.5px',
+          lineHeight: 'normal'
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '2px', backgroundColor: accent, margin: '3px 0 0 0' }} />
+    </div>
+  )
+
   return (
     <div
       style={{
@@ -21,13 +56,13 @@ export default function Modern({ cv }: { cv: CVData }) {
       {/* Left Sidebar */}
       <div
         style={{
-          width: '34%',
-          minWidth: '34%',
+          width: '35%',
+          minWidth: '35%',
           backgroundColor: accent,
           color: '#ffffff',
-          padding: `${Math.min(s.margins || 0.6, 0.45)}in`,
+          padding: `${Math.min(s.margins || 0.6, 0.4)}in`,
           boxSizing: 'border-box',
-          minHeight: '100%'
+          alignSelf: 'stretch'
         }}
       >
         <div style={{ marginBottom: '20px' }}>
@@ -52,45 +87,51 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {/* Contact */}
         <div style={{ marginBottom: '20px' }}>
-          <h4
-            style={{
-              fontSize: `${s.fontSize + 1}pt`,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              borderBottom: '1px solid rgba(255,255,255,0.3)',
-              paddingBottom: '4px',
-              marginBottom: '10px'
-            }}
-          >
-            Contact
-          </h4>
-          <div style={{ fontSize: `${s.fontSize - 0.5}pt` }}>
-            {p.email && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>✉ {p.email}</div>}
-            {p.phone && <div style={{ marginBottom: '6px' }}>☎ {p.phone}</div>}
-            {p.location && <div style={{ marginBottom: '6px' }}>📍 {p.location}</div>}
-            {p.linkedin && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>in {p.linkedin}</div>}
-            {p.github && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>⚡ {p.github}</div>}
-            {p.portfolio && <div style={{ marginBottom: '6px', wordBreak: 'break-all' }}>🌐 {p.portfolio}</div>}
+          {renderSidebarHeader('Contact')}
+          <div style={{ fontSize: `${s.fontSize - 1}pt` }}>
+            {p.email && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', opacity: 0.9 }}>✉</span>
+                <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{p.email}</span>
+              </div>
+            )}
+            {p.phone && (
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', opacity: 0.9 }}>☎</span>
+                <span style={{ whiteSpace: 'nowrap' }}>{p.phone}</span>
+              </div>
+            )}
+            {p.location && (
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', opacity: 0.9 }}>📍</span>
+                <span>{p.location}</span>
+              </div>
+            )}
+            {p.linkedin && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', fontWeight: 'bold', opacity: 0.9 }}>in</span>
+                <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{p.linkedin}</span>
+              </div>
+            )}
+            {p.github && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', opacity: 0.9 }}>⚡</span>
+                <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{p.github}</span>
+              </div>
+            )}
+            {p.portfolio && (
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <span style={{ marginRight: '6px', opacity: 0.9 }}>🌐</span>
+                <span style={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{p.portfolio}</span>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Skills */}
         {cv.skills.length > 0 && (
           <div style={{ marginBottom: '20px' }}>
-            <h4
-              style={{
-                fontSize: `${s.fontSize + 1}pt`,
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                borderBottom: '1px solid rgba(255,255,255,0.3)',
-                paddingBottom: '4px',
-                marginBottom: '10px'
-              }}
-            >
-              Skills
-            </h4>
+            {renderSidebarHeader('Skills')}
             {cv.skills.map((cat) => (
               <div key={cat.id} style={{ marginBottom: '10px' }}>
                 <div style={{ fontWeight: 600, fontSize: `${s.fontSize - 0.5}pt`, marginBottom: '4px' }}>
@@ -122,19 +163,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Languages */}
         {cv.languages.length > 0 && (
           <div style={{ marginBottom: '20px' }}>
-            <h4
-              style={{
-                fontSize: `${s.fontSize + 1}pt`,
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                borderBottom: '1px solid rgba(255,255,255,0.3)',
-                paddingBottom: '4px',
-                marginBottom: '8px'
-              }}
-            >
-              Languages
-            </h4>
+            {renderSidebarHeader('Languages')}
             <div style={{ fontSize: `${s.fontSize - 0.5}pt` }}>
               {cv.languages.map((l) => (
                 <div key={l.id} style={{ marginBottom: '4px' }}>
@@ -148,19 +177,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Certifications in sidebar */}
         {cv.certifications.length > 0 && (
           <div style={{ marginBottom: '20px' }}>
-            <h4
-              style={{
-                fontSize: `${s.fontSize + 1}pt`,
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                borderBottom: '1px solid rgba(255,255,255,0.3)',
-                paddingBottom: '4px',
-                marginBottom: '8px'
-              }}
-            >
-              Certifications
-            </h4>
+            {renderSidebarHeader('Certifications')}
             <div style={{ fontSize: `${s.fontSize - 1}pt` }}>
               {cv.certifications.map((c) => (
                 <div key={c.id} style={{ marginBottom: '6px' }}>
@@ -178,7 +195,7 @@ export default function Modern({ cv }: { cv: CVData }) {
       {/* Main Content */}
       <div
         style={{
-          width: '66%',
+          width: '65%',
           padding: `${s.margins}in`,
           boxSizing: 'border-box'
         }}
@@ -186,18 +203,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Profile */}
         {cv.summary && (
           <div style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 8px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              Profile Summary
-            </h2>
+            {renderMainHeader('Profile Summary')}
             <div style={{ color: '#4a5568' }}>{cv.summary}</div>
           </div>
         )}
@@ -205,23 +211,12 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Work Experience */}
         {cv.experience.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 10px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              Experience
-            </h2>
+            {renderMainHeader('Experience')}
             {cv.experience.map((exp) => (
               <div key={exp.id} style={{ marginBottom: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                   <span style={{ fontSize: `${s.fontSize + 0.5}pt` }}>{exp.title}</span>
-                  <span style={{ color: accent, fontSize: `${s.fontSize - 0.5}pt` }}>
+                  <span style={{ color: accent, fontSize: `${s.fontSize - 0.5}pt`, whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                     {exp.startDate} – {exp.current ? 'Present' : exp.endDate}
                   </span>
                 </div>
@@ -244,24 +239,13 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Projects */}
         {cv.projects.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 10px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              Key Projects
-            </h2>
+            {renderMainHeader('Key Projects')}
             {cv.projects.map((pr) => (
               <div key={pr.id} style={{ marginBottom: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                   <span>{pr.name}</span>
                   {pr.link && (
-                    <span style={{ color: accent, fontSize: '0.85em', fontWeight: 'normal' }}>{pr.link}</span>
+                    <span style={{ color: accent, fontSize: '0.85em', fontWeight: 'normal', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>{pr.link}</span>
                   )}
                 </div>
                 {pr.technologies.length > 0 && (
@@ -278,26 +262,15 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Education */}
         {cv.education.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 10px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              Education
-            </h2>
+            {renderMainHeader('Education')}
             {cv.education.map((edu) => (
               <div key={edu.id} style={{ marginBottom: '8px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                   <span>
                     {edu.degree}
                     {edu.field ? ` in ${edu.field}` : ''}
                   </span>
-                  <span style={{ color: accent, fontSize: `${s.fontSize - 0.5}pt` }}>
+                  <span style={{ color: accent, fontSize: `${s.fontSize - 0.5}pt`, whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                     {edu.startDate} – {edu.endDate}
                   </span>
                 </div>
@@ -314,18 +287,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         {/* Awards & Custom */}
         {cv.awards.length > 0 && (
           <div style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 8px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              Awards & Honors
-            </h2>
+            {renderMainHeader('Awards & Honors')}
             {cv.awards.map((a) => (
               <div key={a.id} style={{ marginBottom: '4px' }}>
                 <strong>{a.title}</strong> – {a.issuer} {a.date ? `(${a.date})` : ''}
@@ -336,18 +298,7 @@ export default function Modern({ cv }: { cv: CVData }) {
 
         {cv.customSections.map((sec) => (
           <div key={sec.id} style={{ marginBottom: '18px' }}>
-            <h2
-              style={{
-                fontSize: `${s.headingSize}pt`,
-                fontWeight: 'bold',
-                color: accent,
-                borderBottom: `2px solid ${accent}`,
-                margin: '0 0 8px 0',
-                paddingBottom: '3px'
-              }}
-            >
-              {sec.title}
-            </h2>
+            {renderMainHeader(sec.title)}
             <ul style={{ margin: 0, paddingLeft: '18px', color: '#4a5568' }}>
               {sec.entries.map((e) => (
                 <li key={e.id}>{e.text}</li>
