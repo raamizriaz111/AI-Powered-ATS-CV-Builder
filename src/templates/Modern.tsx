@@ -14,12 +14,13 @@ export default function Modern({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#ffffff',
-          lineHeight: 1.2
+          lineHeight: 1.2,
+          marginBottom: '6px'
         }}
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '6px 0 6px 0' }} />
+      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', marginBottom: '6px' }} />
     </div>
   )
 
@@ -31,12 +32,13 @@ export default function Modern({ cv }: { cv: CVData }) {
           fontWeight: 'bold',
           color: accent,
           letterSpacing: '0.5px',
-          lineHeight: 1.2
+          lineHeight: 1.2,
+          marginBottom: '7px'
         }}
       >
         {title}
       </div>
-      <div style={{ height: '2px', backgroundColor: accent, margin: '7px 0 7px 0' }} />
+      <div style={{ height: '2px', backgroundColor: accent, marginBottom: '7px' }} />
     </div>
   )
 
@@ -134,23 +136,24 @@ export default function Modern({ cv }: { cv: CVData }) {
             {renderSidebarHeader('Skills')}
             {cv.skills.map((cat) => (
               <div key={cat.id} style={{ marginBottom: '10px' }}>
-                <div style={{ fontWeight: 600, fontSize: `${s.fontSize - 0.5}pt`, marginBottom: '4px' }}>
+                <div style={{ fontWeight: 600, fontSize: `${s.fontSize - 0.5}pt`, marginBottom: '5px' }}>
                   {cat.name}
                 </div>
-                <div style={{ lineHeight: 1.8, marginBottom: '2px' }}>
+                {/* Use block layout with inline-block tags for html2canvas compat */}
+                <div style={{ fontSize: 0, lineHeight: 0 }}>
                   {cat.skills.map((skill, i) => (
                     <span
                       key={i}
                       style={{
+                        display: 'inline-block',
+                        verticalAlign: 'top',
                         backgroundColor: 'rgba(255,255,255,0.18)',
-                        padding: '2px 8px',
+                        padding: '3px 8px',
                         borderRadius: '4px',
                         fontSize: `${s.fontSize - 1.5}pt`,
+                        lineHeight: 1.5,
                         marginRight: '4px',
-                        marginBottom: '4px',
-                        display: 'inline-block',
-                        verticalAlign: 'middle',
-                        lineHeight: 1.3
+                        marginBottom: '5px'
                       }}
                     >
                       {skill}
