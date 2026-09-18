@@ -6,20 +6,20 @@ export default function Executive({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#1e3a8a'
 
   const renderSectionHeader = (title: string, borderBottomWidth: string = '2px') => (
-    <div style={{ marginBottom: '8px' }}>
-      <div
-        style={{
-          fontSize: `${s.headingSize}pt`,
-          fontWeight: 'bold',
-          color: accent,
-          textTransform: 'uppercase',
-          letterSpacing: '1px',
-          lineHeight: 1.3
-        }}
-      >
-        {title}
-      </div>
-      <div style={{ height: borderBottomWidth, backgroundColor: accent, margin: '6px 0 6px 0' }} />
+    <div
+      style={{
+        fontSize: `${s.headingSize}pt`,
+        fontWeight: 'bold',
+        color: accent,
+        textTransform: 'uppercase',
+        letterSpacing: '1px',
+        borderBottom: `${borderBottomWidth} solid ${accent}`,
+        paddingBottom: '7px',
+        marginBottom: '10px',
+        lineHeight: 1.2
+      }}
+    >
+      {title}
     </div>
   )
 

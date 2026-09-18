@@ -29,7 +29,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 h1 { font-size: ${headingSize + 8}pt; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
 .title { font-size: ${fontSize + 1}pt; text-align: center; font-weight: bold; color: #333; margin-bottom: 4px; }
 .contact { text-align: center; font-size: ${fontSize - 0.5}pt; color: #333; margin-bottom: 14px; }
-h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #000; padding-bottom: 5px; margin: 14px 0 8px; }
+h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #000; padding-bottom: 7px; margin: 14px 0 10px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 .sub-row { display: flex; justify-content: space-between; font-style: italic; color: #333; margin-bottom: 2px; }
 ul { margin: 3px 0 6px 20px; } li { margin-bottom: 2px; }
@@ -40,39 +40,64 @@ ul { margin: 3px 0 6px 20px; } li { margin-bottom: 2px; }
 <h1>${p.name || ''}</h1>
 ${p.title ? `<div class="title">${p.title}</div>` : ''}
 <div class="contact">${[p.email, p.phone, p.location, p.linkedin, p.github, p.portfolio].filter(Boolean).join('  |  ')}</div>
-${summary ? `<h2>Professional Summary</h2><div style="text-align:left;">${summary}</div>` : ''}
-${experience.length ? `<h2>Work Experience</h2>${experience.map(e => `
-  <div style="margin-bottom: 10px;">
-    <div class="row"><span>${e.title}</span><span class="nowrap-date">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
-    <div class="sub-row"><span>${e.company}</span>${e.location ? `<span class="nowrap-date">${e.location}</span>` : ''}</div>
-    ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
-  </div>`).join('')}` : ''}
-${education.length ? `<h2>Education</h2>${education.map(edu => `
-  <div style="margin-bottom: 8px;">
-    <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
-    <div style="display:flex; justify-content:space-between;"><span>${edu.institution}</span>${edu.gpa ? `<span class="nowrap-date">GPA: ${edu.gpa}</span>` : ''}</div>
-    ${edu.honors ? `<div style="font-style:italic; font-size:0.95em; color:#444;">${edu.honors}</div>` : ''}
-  </div>`).join('')}` : ''}
-${skills.length ? `<h2>Technical & Professional Skills</h2>${skills.map(s => `<div class="skill-row"><span class="skill-name">${s.name}:</span><span>${s.skills.join(', ')}</span></div>`).join('')}` : ''}
-${projects.length ? `<h2>Projects</h2>${projects.map(pr => `
-  <div style="margin-bottom: 8px;">
-    <div class="row"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date">${pr.link}</span>` : ''}</div>
-    ${pr.technologies.length ? `<div style="font-style:italic; color:#555; font-size:0.95em; margin-bottom:2px;">Technologies: ${pr.technologies.join(', ')}</div>` : ''}
-    <div>${pr.description || ''}</div>
-  </div>`).join('')}` : ''}
-${certifications.length ? `<h2>Certifications</h2>${certifications.map(c => `
-  <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-    <span><strong>${c.name}</strong> – ${c.issuer}${c.credentialId ? ` (ID: ${c.credentialId})` : ''}</span>
-    <span class="nowrap-date">${fmt(c.date)}</span>
-  </div>`).join('')}` : ''}
+
+${summary ? `<div><h2>Professional Summary</h2><div style="text-align:left;">${summary}</div></div>` : ''}
+
+${experience.length ? `
+<div>
+  <h2>Work Experience</h2>
+  ${experience.map(e => `
+    <div style="margin-bottom:10px;">
+      <div class="row"><span>${e.title}</span><span class="nowrap-date">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+      <div class="sub-row"><span>${e.company}</span>${e.location ? `<span>${e.location}</span>` : ''}</div>
+      ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
+    </div>`).join('')}
+</div>` : ''}
+
+${education.length ? `
+<div>
+  <h2>Education</h2>
+  ${education.map(edu => `
+    <div style="margin-bottom:8px;">
+      <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+      <div class="sub-row"><span>${edu.institution}</span>${edu.gpa ? `<span>GPA: ${edu.gpa}</span>` : ''}</div>
+    </div>`).join('')}
+</div>` : ''}
+
+${skills.length ? `
+<div>
+  <h2>Technical & Professional Skills</h2>
+  ${skills.map(s => `<div class="skill-row"><span class="skill-name">${s.name}:</span><span>${s.skills.join(', ')}</span></div>`).join('')}
+</div>` : ''}
+
+${projects.length ? `
+<div>
+  <h2>Projects</h2>
+  ${projects.map(pr => `
+    <div style="margin-bottom:8px;">
+      <div class="row"><span>${pr.name}</span><span class="nowrap-date" style="font-weight:normal; color:#555;">${fmt(pr.startDate)} ${pr.endDate ? `– ${fmt(pr.endDate)}` : ''}</span></div>
+      ${pr.technologies.length ? `<div style="font-style:italic; font-size:0.95em; color:#555; margin-bottom:2px;">Technologies: ${pr.technologies.join(', ')}</div>` : ''}
+      <div>${pr.description || ''}</div>
+    </div>`).join('')}
+</div>` : ''}
+
+${certifications.length ? `
+<div>
+  <h2>Certifications</h2>
+  ${certifications.map(c => `<div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span><strong>${c.name}</strong> – ${c.issuer}</span><span class="nowrap-date">${fmt(c.date)}</span></div>`).join('')}
+</div>` : ''}
+
 ${(languages.length || awards.length) ? `
-  <div style="display:flex; gap:24px; margin-top:8px;">
-    ${languages.length ? `<div style="flex:1;"><h2>Languages</h2><div>${languages.map(l => `${l.name} (${l.proficiency})`).join('  •  ')}</div></div>` : ''}
-    ${awards.length ? `<div style="flex:1;"><h2>Awards</h2>${awards.map(a => `<div style="margin-bottom:3px;"><strong>${a.title}</strong>${a.issuer ? ` – ${a.issuer}` : ''} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}</div>` : ''}
-  </div>` : ''}
+<div style="display:flex; gap:24px;">
+  ${languages.length ? `<div style="flex:1;"><h2>Languages</h2><div>${languages.map(l => `${l.name} (${l.proficiency})`).join('  •  ')}</div></div>` : ''}
+  ${awards.length ? `<div style="flex:1;"><h2>Awards</h2>${awards.map(a => `<div style="margin-bottom:3px;"><strong>${a.title}</strong> – ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}</div>` : ''}
+</div>` : ''}
+
 ${validCustomSections.map(sec => `
+<div>
   <h2>${sec.title}</h2>
-  <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
+  <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>
+</div>`).join('')}
 </body></html>`
 }
 
@@ -80,23 +105,23 @@ ${validCustomSections.map(sec => `
 function renderModern(cv: CVData): string {
   const { personal: p, summary, experience, education, skills, projects, certifications, languages, awards, customSections, settings: s } = cv
   const accent = s.accentColor || '#2563eb'
-  const font = s.font || 'Arial, sans-serif'
+  const font = s.font || 'Helvetica, Arial, sans-serif'
   const fontSize = s.fontSize || 10
   const headingSize = s.headingSize || 13
   const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpacing || 1.15}; color: #2d3748; background: #fff; display: flex; min-height: 100vh; }
-.sidebar { width: 33%; background-color: ${accent}; color: #ffffff; padding: 18mm 12mm; display: flex; flex-direction: column; gap: 16px; }
-.sidebar h1 { font-size: ${headingSize + 6}pt; font-weight: bold; line-height: 1.1; margin-bottom: 4px; }
-.sidebar .job-title { font-size: ${fontSize + 1}pt; opacity: 0.95; margin-bottom: 8px; }
-.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; margin-bottom: 8px; }
-.sidebar .contact-item { margin-bottom: 5px; font-size: ${fontSize - 0.5}pt; }
+body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpacing || 1.15}; color: #2d3748; background: #fff; display: flex; min-height: 297mm; }
+.sidebar { width: 33%; background-color: ${accent}; color: #ffffff; padding: 18mm 14mm; display: flex; flex-direction: column; gap: 16px; }
+.sidebar h1 { font-size: ${headingSize + 6}pt; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
+.sidebar .job-title { font-size: ${fontSize + 1}pt; opacity: 0.9; margin-bottom: 12px; }
+.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 6px; margin-bottom: 10px; }
+.sidebar .contact-item { font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; word-break: break-all; opacity: 0.95; }
 .tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 3px; font-size: ${fontSize - 1.5}pt; margin: 2px; }
 
 .main { width: 67%; padding: 18mm 16mm; display: flex; flex-direction: column; gap: 16px; }
-.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 5px; margin-bottom: 8px; }
+.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 7px; margin-bottom: 10px; }
 .exp-header { display: flex; justify-content: space-between; font-weight: bold; }
 .exp-sub { font-weight: 600; color: #718096; font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; }
 ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
@@ -279,7 +304,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .banner .job-title { font-size: ${fontSize + 2}pt; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; opacity: 0.95; }
 .sub-bar { background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 6px 28px; display: flex; justify-content: center; gap: 18px; font-size: ${fontSize - 1}pt; color: #475569; }
 .content { padding: ${s.margins || 0.6}in; }
-.sec-title { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 5px; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
+.sec-title { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 7px; margin: 14px 0 10px; text-transform: uppercase; letter-spacing: 1px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 .nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
@@ -447,7 +472,7 @@ h1 { font-size: ${headingSize + 8}pt; font-weight: normal; letter-spacing: 1.5px
 .job-title { font-size: ${fontSize + 1}pt; font-style: italic; color: #4b5563; margin-bottom: 6px; }
 .contact { font-size: ${fontSize - 1}pt; color: #4b5563; }
 .cv-sub { text-align: center; font-style: italic; color: #6b7280; font-size: ${fontSize - 1}pt; margin-bottom: 12px; }
-h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #d1d5db; padding-bottom: 5px; margin: 14px 0 8px; }
+h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #d1d5db; padding-bottom: 7px; margin: 14px 0 10px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 .skill-row { display: flex; align-items: baseline; margin-bottom: 3px; }

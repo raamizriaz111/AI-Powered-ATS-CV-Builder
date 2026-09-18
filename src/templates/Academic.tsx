@@ -5,20 +5,20 @@ export default function Academic({ cv }: { cv: CVData }) {
   const p = cv.personal
 
   const renderSectionHeader = (title: string) => (
-    <div style={{ marginBottom: '8px' }}>
-      <div
-        style={{
-          fontSize: `${s.headingSize}pt`,
-          fontWeight: 'bold',
-          textTransform: 'uppercase',
-          letterSpacing: '1px',
-          color: '#111827',
-          lineHeight: 1.3
-        }}
-      >
-        {title}
-      </div>
-      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '6px 0 6px 0' }} />
+    <div
+      style={{
+        fontSize: `${s.headingSize}pt`,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        letterSpacing: '1px',
+        color: '#111827',
+        borderBottom: '1px solid #d1d5db',
+        paddingBottom: '7px',
+        marginBottom: '10px',
+        lineHeight: 1.2
+      }}
+    >
+      {title}
     </div>
   )
 
