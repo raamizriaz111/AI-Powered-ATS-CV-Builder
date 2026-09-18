@@ -1,13 +1,18 @@
+import { useRef } from 'react'
 import { useCVStore } from '../../../store/cvStore'
 import { TEMPLATES } from '../../../templates'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Pipette } from 'lucide-react'
+
+const PRESET_COLORS = ['#000000', '#2563eb', '#16a34a', '#dc2626', '#9333ea', '#0d9488', '#ea580c', '#0891b2']
 
 export default function CVSettingsSection() {
   const { currentCV, updateCV } = useCVStore()
+  const colorInputRef = useRef<HTMLInputElement>(null)
   if (!currentCV) return null
 
   const s = currentCV.settings
   const activeTemplate = TEMPLATES.find(t => t.id === s.template)
+  const isPreset = PRESET_COLORS.includes(s.accentColor)
 
   return (
     <div className="p-6 space-y-6">
@@ -43,11 +48,39 @@ export default function CVSettingsSection() {
         </div>
         <div className="flex flex-col gap-1.5">
           <label className="text-sm text-gray-400">Accent Color</label>
-          <div className="flex gap-2">
-            {['#000000', '#2563eb', '#16a34a', '#dc2626', '#9333ea', '#0d9488'].map(c => (
-              <button key={c} onClick={() => updateCV(cv => { cv.settings.accentColor = c })} className={`w-8 h-8 rounded-full border-2 ${s.accentColor === c ? 'border-white' : 'border-transparent'}`} style={{ backgroundColor: c }} />
+          <div className="flex items-center gap-2 flex-wrap">
+            {PRESET_COLORS.map(c => (
+              <button
+                key={c}
+                onClick={() => updateCV(cv => { cv.settings.accentColor = c })}
+                className={`w-7 h-7 rounded-full border-2 transition-transform hover:scale-110 ${s.accentColor === c ? 'border-white scale-110 ring-2 ring-white/30' : 'border-transparent'}`}
+                style={{ backgroundColor: c }}
+                title={c}
+              />
             ))}
+            {/* Custom color picker */}
+            <div className="relative" title="Pick custom color">
+              <button
+                onClick={() => colorInputRef.current?.click()}
+                className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-transform hover:scale-110 overflow-hidden ${!isPreset ? 'border-white scale-110 ring-2 ring-white/30' : 'border-dashed border-gray-500 hover:border-gray-300'}`}
+                style={{ backgroundColor: !isPreset ? s.accentColor : 'transparent' }}
+                title="Pick any custom color"
+              >
+                {isPreset && <Pipette className="w-3.5 h-3.5 text-gray-400" />}
+              </button>
+              <input
+                ref={colorInputRef}
+                type="color"
+                value={s.accentColor}
+                onChange={e => updateCV(cv => { cv.settings.accentColor = e.target.value })}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                style={{ width: '28px', height: '28px' }}
+              />
+            </div>
           </div>
+          {!isPreset && (
+            <span className="text-[11px] text-gray-500 font-mono">{s.accentColor}</span>
+          )}
         </div>
       </div>
 
