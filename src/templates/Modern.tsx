@@ -14,12 +14,12 @@ export default function Modern({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#ffffff',
-          lineHeight: 'normal'
+          lineHeight: 1.25
         }}
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '4px 0 0 0' }} />
+      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '5px 0 0 0' }} />
     </div>
   )
 
@@ -31,12 +31,12 @@ export default function Modern({ cv }: { cv: CVData }) {
           fontWeight: 'bold',
           color: accent,
           letterSpacing: '0.5px',
-          lineHeight: 'normal'
+          lineHeight: 1.25
         }}
       >
         {title}
       </div>
-      <div style={{ height: '2px', backgroundColor: accent, margin: '3px 0 0 0' }} />
+      <div style={{ height: '2px', backgroundColor: accent, margin: '5px 0 0 0' }} />
     </div>
   )
 
@@ -296,16 +296,20 @@ export default function Modern({ cv }: { cv: CVData }) {
           </div>
         )}
 
-        {cv.customSections.map((sec) => (
-          <div key={sec.id} style={{ marginBottom: '18px' }}>
-            {renderMainHeader(sec.title)}
-            <ul style={{ margin: 0, paddingLeft: '18px', color: '#4a5568' }}>
-              {sec.entries.map((e) => (
-                <li key={e.id}>{e.text}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {cv.customSections
+          .filter((sec) => sec.title?.trim() || (sec.entries && sec.entries.some((e) => e.text?.trim())))
+          .map((sec) => (
+            <div key={sec.id} style={{ marginBottom: '18px' }}>
+              {sec.title?.trim() && renderMainHeader(sec.title)}
+              {sec.entries && sec.entries.length > 0 && (
+                <ul style={{ margin: 0, paddingLeft: '18px', color: '#4a5568' }}>
+                  {sec.entries.map((e) => (
+                    <li key={e.id}>{e.text}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
       </div>
     </div>
   )

@@ -21,6 +21,7 @@ function renderClassicATS(cv: CVData): string {
   const fontSize = s.fontSize || 11
   const headingSize = s.headingSize || 14
   const margin = s.margins || 0.6
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -32,42 +33,44 @@ h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; 
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 .sub-row { display: flex; justify-content: space-between; font-style: italic; color: #333; margin-bottom: 2px; }
 ul { margin: 3px 0 6px 20px; } li { margin-bottom: 2px; }
-.skill-row { margin-bottom: 4px; }
+.skill-row { margin-bottom: 4px; display: flex; align-items: baseline; }
+.skill-name { width: 200px; min-width: 200px; flex-shrink: 0; font-weight: bold; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <h1>${p.name || ''}</h1>
 ${p.title ? `<div class="title">${p.title}</div>` : ''}
 <div class="contact">${[p.email, p.phone, p.location, p.linkedin, p.github, p.portfolio].filter(Boolean).join('  |  ')}</div>
-${summary ? `<h2>Professional Summary</h2><div style="text-align:justify;">${summary}</div>` : ''}
+${summary ? `<h2>Professional Summary</h2><div style="text-align:left;">${summary}</div>` : ''}
 ${experience.length ? `<h2>Work Experience</h2>${experience.map(e => `
   <div style="margin-bottom: 10px;">
-    <div class="row"><span>${e.title}</span><span>${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
-    <div class="sub-row"><span>${e.company}</span>${e.location ? `<span>${e.location}</span>` : ''}</div>
+    <div class="row"><span>${e.title}</span><span class="nowrap-date">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+    <div class="sub-row"><span>${e.company}</span>${e.location ? `<span class="nowrap-date">${e.location}</span>` : ''}</div>
     ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
   </div>`).join('')}` : ''}
 ${education.length ? `<h2>Education</h2>${education.map(edu => `
   <div style="margin-bottom: 8px;">
-    <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span>${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
-    <div style="display:flex; justify-content:space-between;"><span>${edu.institution}</span>${edu.gpa ? `<span>GPA: ${edu.gpa}</span>` : ''}</div>
+    <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+    <div style="display:flex; justify-content:space-between;"><span>${edu.institution}</span>${edu.gpa ? `<span class="nowrap-date">GPA: ${edu.gpa}</span>` : ''}</div>
     ${edu.honors ? `<div style="font-style:italic; font-size:0.95em; color:#444;">${edu.honors}</div>` : ''}
   </div>`).join('')}` : ''}
-${skills.length ? `<h2>Technical & Professional Skills</h2>${skills.map(s => `<div class="skill-row"><strong>${s.name}: </strong>${s.skills.join(', ')}</div>`).join('')}` : ''}
+${skills.length ? `<h2>Technical & Professional Skills</h2>${skills.map(s => `<div class="skill-row"><span class="skill-name">${s.name}:</span><span>${s.skills.join(', ')}</span></div>`).join('')}` : ''}
 ${projects.length ? `<h2>Projects</h2>${projects.map(pr => `
   <div style="margin-bottom: 8px;">
-    <div class="row"><span>${pr.name}</span>${pr.link ? `<span>${pr.link}</span>` : ''}</div>
+    <div class="row"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date">${pr.link}</span>` : ''}</div>
     ${pr.technologies.length ? `<div style="font-style:italic; color:#555; font-size:0.95em; margin-bottom:2px;">Technologies: ${pr.technologies.join(', ')}</div>` : ''}
     <div>${pr.description || ''}</div>
   </div>`).join('')}` : ''}
 ${certifications.length ? `<h2>Certifications</h2>${certifications.map(c => `
   <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
     <span><strong>${c.name}</strong> – ${c.issuer}${c.credentialId ? ` (ID: ${c.credentialId})` : ''}</span>
-    <span>${fmt(c.date)}</span>
+    <span class="nowrap-date">${fmt(c.date)}</span>
   </div>`).join('')}` : ''}
 ${(languages.length || awards.length) ? `
   <div style="display:flex; gap:24px; margin-top:8px;">
     ${languages.length ? `<div style="flex:1;"><h2>Languages</h2><div>${languages.map(l => `${l.name} (${l.proficiency})`).join('  •  ')}</div></div>` : ''}
     ${awards.length ? `<div style="flex:1;"><h2>Awards</h2>${awards.map(a => `<div style="margin-bottom:3px;"><strong>${a.title}</strong>${a.issuer ? ` – ${a.issuer}` : ''} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}</div>` : ''}
   </div>` : ''}
-${customSections.map(sec => `
+${validCustomSections.map(sec => `
   <h2>${sec.title}</h2>
   <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
 </body></html>`
@@ -80,6 +83,7 @@ function renderModern(cv: CVData): string {
   const font = s.font || 'Arial, sans-serif'
   const fontSize = s.fontSize || 10
   const headingSize = s.headingSize || 13
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -96,6 +100,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .exp-header { display: flex; justify-content: space-between; font-weight: bold; }
 .exp-sub { font-weight: 600; color: #718096; font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; }
 ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <div class="sidebar">
   <div>
@@ -143,7 +148,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
     <h2>Experience</h2>
     ${experience.map(e => `
       <div style="margin-bottom:12px;">
-        <div class="exp-header"><span>${e.title}</span><span style="color:${accent}; font-size:0.9em;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+        <div class="exp-header"><span>${e.title}</span><span class="nowrap-date" style="color:${accent}; font-size:0.9em;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
         <div class="exp-sub">${e.company}${e.location ? ` | ${e.location}` : ''}</div>
         ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
       </div>`).join('')}
@@ -154,7 +159,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
     <h2>Projects</h2>
     ${projects.map(pr => `
       <div style="margin-bottom:10px;">
-        <div class="exp-header"><span>${pr.name}</span>${pr.link ? `<span style="color:${accent}; font-size:0.85em;">${pr.link}</span>` : ''}</div>
+        <div class="exp-header"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date" style="color:${accent}; font-size:0.85em;">${pr.link}</span>` : ''}</div>
         ${pr.technologies.length ? `<div style="color:#718096; font-size:0.85em; margin-bottom:2px;">${pr.technologies.join(' • ')}</div>` : ''}
         ${pr.description ? `<div style="color:#4a5568;">${pr.description}</div>` : ''}
       </div>`).join('')}
@@ -165,7 +170,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
     <h2>Education</h2>
     ${education.map(edu => `
       <div style="margin-bottom:8px;">
-        <div class="exp-header"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span style="color:${accent}; font-size:0.9em;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+        <div class="exp-header"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date" style="color:${accent}; font-size:0.9em;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
         <div style="color:#718096; font-size:${fontSize - 0.5}pt;">${edu.institution}${edu.gpa ? ` • GPA: ${edu.gpa}` : ''}</div>
       </div>`).join('')}
   </div>` : ''}
@@ -176,7 +181,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
     ${awards.map(a => `<div style="margin-bottom:4px;"><strong>${a.title}</strong> – ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}
   </div>` : ''}
 
-  ${customSections.map(sec => `
+  ${validCustomSections.map(sec => `
   <div>
     <h2>${sec.title}</h2>
     <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>
@@ -192,6 +197,7 @@ function renderMinimal(cv: CVData): string {
   const fontSize = s.fontSize || 10.5
   const headingSize = s.headingSize || 13
   const margin = s.margins || 0.6
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -203,6 +209,9 @@ h1 { font-size: ${headingSize + 8}pt; font-weight: 300; letter-spacing: -0.5px; 
 .sec-title { font-size: ${fontSize - 1}pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #a0aec0; margin: 14px 0 8px; }
 .row { display: flex; justify-content: space-between; align-items: baseline; }
 ul { margin: 0 0 6px 16px; color: #4a5568; } li { margin-bottom: 2px; }
+.skill-row { display: flex; align-items: baseline; margin-bottom: 3px; }
+.skill-name { width: 200px; min-width: 200px; flex-shrink: 0; font-weight: 600; color: #2d3748; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <h1>${p.name || ''}</h1>
 ${p.title ? `<div class="title">${p.title}</div>` : ''}
@@ -215,7 +224,7 @@ ${experience.length ? `
 <div class="sec-title">Experience</div>
 ${experience.map(e => `
   <div style="margin-bottom:12px;">
-    <div class="row"><span style="font-weight:600; color:#1a202c;">${e.title}</span><span style="font-size:${fontSize - 1}pt; color:#a0aec0;">${fmt(e.startDate)} — ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+    <div class="row"><span style="font-weight:600; color:#1a202c;">${e.title}</span><span class="nowrap-date" style="font-size:${fontSize - 1}pt; color:#a0aec0;">${fmt(e.startDate)} — ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
     <div style="color:#718096; font-size:${fontSize - 0.5}pt; margin-bottom:3px;">${e.company}${e.location ? ` · ${e.location}` : ''}</div>
     ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
   </div>`).join('')}` : ''}
@@ -224,7 +233,7 @@ ${education.length ? `
 <div class="sec-title">Education</div>
 ${education.map(edu => `
   <div style="margin-bottom:8px;">
-    <div class="row"><span style="font-weight:600; color:#1a202c;">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span style="font-size:${fontSize - 1}pt; color:#a0aec0;">${fmt(edu.startDate)} — ${fmt(edu.endDate)}</span></div>
+    <div class="row"><span style="font-weight:600; color:#1a202c;">${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date" style="font-size:${fontSize - 1}pt; color:#a0aec0;">${fmt(edu.startDate)} — ${fmt(edu.endDate)}</span></div>
     <div style="color:#718096; font-size:${fontSize - 0.5}pt;">${edu.institution}${edu.gpa ? ` · GPA: ${edu.gpa}` : ''}</div>
   </div>`).join('')}` : ''}
 
@@ -232,14 +241,14 @@ ${projects.length ? `
 <div class="sec-title">Projects</div>
 ${projects.map(pr => `
   <div style="margin-bottom:8px;">
-    <div class="row"><span style="font-weight:600; color:#1a202c;">${pr.name}</span>${pr.link ? `<span style="font-size:0.85em; color:#718096;">${pr.link}</span>` : ''}</div>
+    <div class="row"><span style="font-weight:600; color:#1a202c;">${pr.name}</span>${pr.link ? `<span class="nowrap-date" style="font-size:0.85em; color:#718096;">${pr.link}</span>` : ''}</div>
     ${pr.technologies.length ? `<div style="font-size:0.85em; color:#a0aec0; margin-bottom:2px;">${pr.technologies.join(' · ')}</div>` : ''}
     <div style="color:#4a5568;">${pr.description || ''}</div>
   </div>`).join('')}` : ''}
 
 ${skills.length ? `
 <div class="sec-title">Skills</div>
-${skills.map(s => `<div style="display:flex; gap:8px; margin-bottom:3px;"><span style="font-weight:600; min-width:140px; color:#2d3748;">${s.name}:</span><span style="color:#4a5568;">${s.skills.join(', ')}</span></div>`).join('')}` : ''}
+${skills.map(s => `<div class="skill-row"><span class="skill-name">${s.name}:</span><span style="color:#4a5568;">${s.skills.join(', ')}</span></div>`).join('')}` : ''}
 
 ${(certifications.length || languages.length) ? `
 <div style="display:flex; gap:24px; margin-top:8px;">
@@ -249,7 +258,7 @@ ${(certifications.length || languages.length) ? `
 
 ${awards.length ? `<div class="sec-title">Awards</div>${awards.map(a => `<div style="margin-bottom:3px;"><strong>${a.title}</strong> · ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}` : ''}
 
-${customSections.map(sec => `<div class="sec-title">${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
+${validCustomSections.map(sec => `<div class="sec-title">${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
 </body></html>`
 }
 
@@ -260,6 +269,7 @@ function renderExecutive(cv: CVData): string {
   const font = s.font || 'Georgia, serif'
   const fontSize = s.fontSize || 10.5
   const headingSize = s.headingSize || 13
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -272,6 +282,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .sec-title { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 2px; margin: 12px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <div class="banner">
   <h1>${p.name || ''}</h1>
@@ -282,7 +293,7 @@ ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 </div>
 
 <div class="content">
-  ${summary ? `<div class="sec-title">Executive Profile</div><div style="text-align:justify; color:#334155;">${summary}</div>` : ''}
+  ${summary ? `<div class="sec-title">Executive Profile</div><div style="text-align:left; color:#334155;">${summary}</div>` : ''}
 
   ${skills.length ? `
   <div class="sec-title">Core Competencies & Skills</div>
@@ -294,7 +305,7 @@ ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
   <div class="sec-title">Professional Experience</div>
   ${experience.map(e => `
     <div style="margin-bottom:12px;">
-      <div class="row"><span>${e.title}</span><span style="color:${accent};">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+      <div class="row"><span>${e.title}</span><span class="nowrap-date" style="color:${accent};">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
       <div style="font-style:italic; color:#475569; margin-bottom:3px;">${e.company}${e.location ? `, ${e.location}` : ''}</div>
       ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
     </div>`).join('')}` : ''}
@@ -303,7 +314,7 @@ ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
   <div class="sec-title">Key Initiatives & Projects</div>
   ${projects.map(pr => `
     <div style="margin-bottom:8px;">
-      <div class="row"><span>${pr.name}</span>${pr.link ? `<span style="color:${accent}; font-weight:normal;">${pr.link}</span>` : ''}</div>
+      <div class="row"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date" style="color:${accent}; font-weight:normal;">${pr.link}</span>` : ''}</div>
       ${pr.technologies.length ? `<div style="font-size:0.9em; color:#64748b; font-style:italic;">${pr.technologies.join(' • ')}</div>` : ''}
       <div>${pr.description || ''}</div>
     </div>`).join('')}` : ''}
@@ -312,7 +323,7 @@ ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
   <div class="sec-title">Education & Credentials</div>
   ${education.map(edu => `
     <div style="margin-bottom:6px;">
-      <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span style="color:${accent};">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+      <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date" style="color:${accent};">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
       <div style="color:#475569;">${edu.institution}${edu.gpa ? ` | GPA: ${edu.gpa}` : ''}</div>
     </div>`).join('')}` : ''}
 
@@ -324,7 +335,7 @@ ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 
   ${awards.length ? `<div class="sec-title">Honors & Accolades</div>${awards.map(a => `<div style="margin-bottom:3px;"><strong>${a.title}</strong> – ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}` : ''}
 
-  ${customSections.map(sec => `<div class="sec-title">${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
+  ${validCustomSections.map(sec => `<div class="sec-title">${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
 </div>
 </body></html>`
 }
@@ -337,6 +348,7 @@ function renderTechnical(cv: CVData): string {
   const fontSize = s.fontSize || 10.5
   const headingSize = s.headingSize || 13
   const margin = s.margins || 0.6
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -349,6 +361,7 @@ h1 { font-size: ${headingSize + 8}pt; font-weight: bold; color: #0f172a; margin-
 .sec-title span { color: ${accent}; font-family: monospace; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <div class="header-box">
   <div style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -383,7 +396,7 @@ ${experience.length ? `
 <div class="sec-title"><span>//</span> Work Experience</div>
 ${experience.map(e => `
   <div style="margin-bottom:10px;">
-    <div class="row"><span>${e.title}</span><span style="font-family:ui-monospace, monospace; color:${accent}; font-weight:600;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+    <div class="row"><span>${e.title}</span><span class="nowrap-date" style="font-family:ui-monospace, monospace; color:${accent}; font-weight:600;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
     <div style="color:#475569; font-size:${fontSize - 0.5}pt; margin-bottom:3px;">${e.company}${e.location ? ` | ${e.location}` : ''}</div>
     ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
   </div>`).join('')}` : ''}
@@ -392,7 +405,7 @@ ${projects.length ? `
 <div class="sec-title"><span>//</span> Projects & Code</div>
 ${projects.map(pr => `
   <div style="margin-bottom:8px;">
-    <div class="row"><span>${pr.name}</span>${pr.link ? `<span style="color:${accent}; font-family:monospace; font-size:0.85em;">[${pr.link}]</span>` : ''}</div>
+    <div class="row"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date" style="color:${accent}; font-family:monospace; font-size:0.85em;">[${pr.link}]</span>` : ''}</div>
     ${pr.technologies.length ? `<div style="font-family:ui-monospace, monospace; font-size:${fontSize - 1.5}pt; color:#64748b; margin-bottom:2px;">stack: ${pr.technologies.join(', ')}</div>` : ''}
     <div>${pr.description || ''}</div>
   </div>`).join('')}` : ''}
@@ -401,7 +414,7 @@ ${education.length ? `
 <div class="sec-title"><span>//</span> Education</div>
 ${education.map(edu => `
   <div style="margin-bottom:6px;">
-    <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span style="font-family:ui-monospace, monospace; color:#64748b;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+    <div class="row"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date" style="font-family:ui-monospace, monospace; color:#64748b;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
     <div style="color:#475569; font-size:${fontSize - 0.5}pt;">${edu.institution}${edu.gpa ? ` | GPA: ${edu.gpa}` : ''}</div>
   </div>`).join('')}` : ''}
 
@@ -413,7 +426,7 @@ ${(certifications.length || languages.length) ? `
 
 ${awards.length ? `<div class="sec-title"><span>//</span> Honors & Awards</div>${awards.map(a => `<div><strong>${a.title}</strong> – ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}` : ''}
 
-${customSections.map(sec => `<div class="sec-title"><span>//</span> ${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
+${validCustomSections.map(sec => `<div class="sec-title"><span>//</span> ${sec.title}</div><ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
 </body></html>`
 }
 
@@ -424,6 +437,7 @@ function renderAcademic(cv: CVData): string {
   const fontSize = s.fontSize || 11
   const headingSize = s.headingSize || 13
   const margin = s.margins || 0.6
+  const validCustomSections = (customSections || []).filter(sec => sec.title?.trim() || sec.entries?.some(e => e.text?.trim()))
 
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -435,7 +449,10 @@ h1 { font-size: ${headingSize + 8}pt; font-weight: normal; letter-spacing: 1.5px
 .cv-sub { text-align: center; font-style: italic; color: #6b7280; font-size: ${fontSize - 1}pt; margin-bottom: 12px; }
 h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #d1d5db; padding-bottom: 2px; margin: 12px 0 6px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
-ul { margin: 0 0 6px 18px; } li { margin-bottom: 2px; }
+ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
+.skill-row { display: flex; align-items: baseline; margin-bottom: 3px; }
+.skill-name { width: 200px; min-width: 200px; flex-shrink: 0; font-weight: bold; }
+.nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
 </style></head><body>
 <div class="header">
   <h1>${p.name || ''}</h1>
@@ -448,20 +465,20 @@ ${education.length ? `
 <h2>Education</h2>
 ${education.map(edu => `
   <div style="margin-bottom:8px;">
-    <div class="row"><span>${edu.institution}</span><span style="font-style:italic; font-weight:normal;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
+    <div class="row"><span>${edu.institution}</span><span class="nowrap-date" style="font-style:italic; font-weight:normal;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
     <div style="padding-left:12px;">
       <div>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}${edu.gpa ? ` (GPA: ${edu.gpa})` : ''}</div>
       ${edu.honors ? `<div style="font-style:italic; color:#4b5563;">Honors: ${edu.honors}</div>` : ''}
     </div>
   </div>`).join('')}` : ''}
 
-${summary ? `<h2>Research Profile & Summary</h2><div style="text-align:justify;">${summary}</div>` : ''}
+${summary ? `<h2>Research Profile & Summary</h2><div style="text-align:left;">${summary}</div>` : ''}
 
 ${experience.length ? `
 <h2>Appointments & Experience</h2>
 ${experience.map(e => `
   <div style="margin-bottom:10px;">
-    <div class="row"><span>${e.title}</span><span style="font-style:italic; font-weight:normal;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
+    <div class="row"><span>${e.title}</span><span class="nowrap-date" style="font-style:italic; font-weight:normal;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
     <div style="color:#4b5563; font-style:italic; margin-bottom:3px;">${e.company}${e.location ? `, ${e.location}` : ''}</div>
     ${e.bullets.length ? `<ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
   </div>`).join('')}` : ''}
@@ -470,18 +487,18 @@ ${projects.length ? `
 <h2>Research & Technical Projects</h2>
 ${projects.map(pr => `
   <div style="margin-bottom:8px;">
-    <div class="row"><span>${pr.name}</span><span style="font-style:italic; font-weight:normal;">${fmt(pr.startDate)} ${pr.endDate ? `– ${fmt(pr.endDate)}` : ''}</span></div>
+    <div class="row"><span>${pr.name}</span><span class="nowrap-date" style="font-style:italic; font-weight:normal;">${fmt(pr.startDate)} ${pr.endDate ? `– ${fmt(pr.endDate)}` : ''}</span></div>
     ${pr.technologies.length ? `<div style="font-style:italic; color:#6b7280; font-size:0.95em;">Methodologies: ${pr.technologies.join(', ')}</div>` : ''}
     <div>${pr.description || ''}</div>
   </div>`).join('')}` : ''}
 
 ${skills.length ? `
 <h2>Areas of Expertise & Skills</h2>
-${skills.map(s => `<div style="margin-bottom:3px;"><strong>${s.name}: </strong>${s.skills.join(', ')}</div>`).join('')}` : ''}
+${skills.map(s => `<div class="skill-row"><span class="skill-name">${s.name}:</span><span>${s.skills.join(', ')}</span></div>`).join('')}` : ''}
 
 ${awards.length ? `
 <h2>Honors, Awards & Grants</h2>
-${awards.map(a => `<div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span><strong>${a.title}</strong>${a.issuer ? `, ${a.issuer}` : ''}</span><span style="font-style:italic;">${fmt(a.date)}</span></div>`).join('')}` : ''}
+${awards.map(a => `<div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span><strong>${a.title}</strong>${a.issuer ? `, ${a.issuer}` : ''}</span><span class="nowrap-date" style="font-style:italic;">${fmt(a.date)}</span></div>`).join('')}` : ''}
 
 ${certifications.length ? `
 <h2>Certifications</h2>
@@ -491,7 +508,7 @@ ${languages.length ? `
 <h2>Languages</h2>
 <div>${languages.map(l => `${l.name} (${l.proficiency})`).join(', ')}</div>` : ''}
 
-${customSections.map(sec => `
+${validCustomSections.map(sec => `
 <h2>${sec.title}</h2>
 <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>`).join('')}
 </body></html>`

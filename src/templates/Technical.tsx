@@ -188,7 +188,10 @@ export default function Technical({ cv }: { cv: CVData }) {
                     fontFamily: 'ui-monospace, monospace',
                     fontSize: `${s.fontSize - 1}pt`,
                     color: accent,
-                    fontWeight: 600
+                    fontWeight: 600,
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    marginLeft: '12px'
                   }}
                 >
                   {exp.startDate} – {exp.current ? 'Present' : exp.endDate}
@@ -276,7 +279,7 @@ export default function Technical({ cv }: { cv: CVData }) {
                   {edu.degree}
                   {edu.field ? ` in ${edu.field}` : ''}
                 </span>
-                <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: `${s.fontSize - 1}pt`, color: '#64748b' }}>
+                <span style={{ fontFamily: 'ui-monospace, monospace', fontSize: `${s.fontSize - 1}pt`, color: '#64748b', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                   {edu.startDate} – {edu.endDate}
                 </span>
               </div>
@@ -332,18 +335,24 @@ export default function Technical({ cv }: { cv: CVData }) {
         </div>
       )}
 
-      {cv.customSections.map((sec) => (
-        <div key={sec.id} style={{ marginBottom: '12px' }}>
-          <div style={{ fontWeight: 'bold', color: '#0f172a', marginBottom: '4px' }}>
-            <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> {sec.title}
+      {cv.customSections
+        .filter((sec) => sec.title?.trim() || (sec.entries && sec.entries.some((e) => e.text?.trim())))
+        .map((sec) => (
+          <div key={sec.id} style={{ marginBottom: '12px' }}>
+            {sec.title?.trim() && (
+              <div style={{ fontWeight: 'bold', color: '#0f172a', marginBottom: '4px' }}>
+                <span style={{ color: accent, fontFamily: 'monospace' }}>//</span> {sec.title}
+              </div>
+            )}
+            {sec.entries && sec.entries.length > 0 && (
+              <ul style={{ margin: 0, paddingLeft: '18px', color: '#334155' }}>
+                {sec.entries.map((e) => (
+                  <li key={e.id}>{e.text}</li>
+                ))}
+              </ul>
+            )}
           </div>
-          <ul style={{ margin: 0, paddingLeft: '18px', color: '#334155' }}>
-            {sec.entries.map((e) => (
-              <li key={e.id}>{e.text}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+        ))}
     </div>
   )
 }

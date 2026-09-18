@@ -13,12 +13,12 @@ export default function Academic({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#111827',
-          lineHeight: 'normal'
+          lineHeight: 1.25
         }}
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '2px 0 0 0' }} />
+      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '5px 0 0 0' }} />
     </div>
   )
 
@@ -69,9 +69,9 @@ export default function Academic({ cv }: { cv: CVData }) {
           {renderSectionHeader('Education')}
           {cv.education.map((edu) => (
             <div key={edu.id} style={{ marginBottom: '10px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontWeight: 'bold' }}>{edu.institution}</span>
-                <span style={{ fontStyle: 'italic' }}>
+                <span style={{ fontStyle: 'italic', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                   {edu.startDate} – {edu.endDate}
                 </span>
               </div>
@@ -91,7 +91,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       {cv.summary && (
         <div style={{ marginBottom: '16px' }}>
           {renderSectionHeader('Research Profile & Summary')}
-          <div style={{ textAlign: 'justify', lineHeight: 1.5 }}>{cv.summary}</div>
+          <div style={{ textAlign: 'left', lineHeight: 1.5 }}>{cv.summary}</div>
         </div>
       )}
 
@@ -101,9 +101,9 @@ export default function Academic({ cv }: { cv: CVData }) {
           {renderSectionHeader('Appointments & Experience')}
           {cv.experience.map((exp) => (
             <div key={exp.id} style={{ marginBottom: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontWeight: 'bold' }}>{exp.title}</span>
-                <span style={{ fontStyle: 'italic' }}>
+                <span style={{ fontStyle: 'italic', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                   {exp.startDate} – {exp.current ? 'Present' : exp.endDate}
                 </span>
               </div>
@@ -131,10 +131,10 @@ export default function Academic({ cv }: { cv: CVData }) {
           {renderSectionHeader('Research & Technical Projects')}
           {cv.projects.map((proj) => (
             <div key={proj.id} style={{ marginBottom: '10px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                 <span>{proj.name}</span>
                 {(proj.startDate || proj.endDate) && (
-                  <span style={{ fontStyle: 'italic', fontWeight: 'normal' }}>
+                  <span style={{ fontStyle: 'italic', fontWeight: 'normal', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                     {proj.startDate} {proj.endDate ? `– ${proj.endDate}` : ''}
                   </span>
                 )}
@@ -162,9 +162,9 @@ export default function Academic({ cv }: { cv: CVData }) {
         <div style={{ marginBottom: '16px' }}>
           {renderSectionHeader('Areas of Expertise & Skills')}
           {cv.skills.map((cat) => (
-            <div key={cat.id} style={{ marginBottom: '4px' }}>
-              <strong>{cat.name}: </strong>
-              <span>{cat.skills.join(', ')}</span>
+            <div key={cat.id} style={{ display: 'flex', alignItems: 'baseline', marginBottom: '4px' }}>
+              <strong style={{ display: 'inline-block', width: '200px', minWidth: '200px', flexShrink: 0 }}>{cat.name}: </strong>
+              <span style={{ flex: 1 }}>{cat.skills.join(', ')}</span>
             </div>
           ))}
         </div>
@@ -175,13 +175,13 @@ export default function Academic({ cv }: { cv: CVData }) {
         <div style={{ marginBottom: '16px' }}>
           {renderSectionHeader('Honors, Awards & Grants')}
           {cv.awards.map((a) => (
-            <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+            <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
               <span>
                 <strong>{a.title}</strong>
                 {a.issuer ? `, ${a.issuer}` : ''}
                 {a.description ? ` — ${a.description}` : ''}
               </span>
-              <span style={{ fontStyle: 'italic' }}>{a.date}</span>
+              <span style={{ fontStyle: 'italic', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>{a.date}</span>
             </div>
           ))}
         </div>
@@ -194,8 +194,9 @@ export default function Academic({ cv }: { cv: CVData }) {
             <div style={{ flex: 1, paddingRight: cv.languages.length > 0 ? '16px' : '0' }}>
               {renderSectionHeader('Certifications')}
               {cv.certifications.map((c) => (
-                <div key={c.id} style={{ marginBottom: '3px' }}>
-                  <strong>{c.name}</strong>, {c.issuer} {c.date ? `(${c.date})` : ''}
+                <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '3px' }}>
+                  <span><strong>{c.name}</strong>, {c.issuer}</span>
+                  {c.date && <span style={{ fontStyle: 'italic', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>({c.date})</span>}
                 </div>
               ))}
             </div>
@@ -210,18 +211,22 @@ export default function Academic({ cv }: { cv: CVData }) {
       )}
 
       {/* Publications / Custom Sections */}
-      {cv.customSections.map((sec) => (
-        <div key={sec.id} style={{ marginBottom: '16px' }}>
-          {renderSectionHeader(sec.title)}
-          <ul style={{ margin: 0, paddingLeft: '20px' }}>
-            {sec.entries.map((e) => (
-              <li key={e.id} style={{ marginBottom: '3px' }}>
-                {e.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {cv.customSections
+        .filter((sec) => sec.title?.trim() || (sec.entries && sec.entries.some((e) => e.text?.trim())))
+        .map((sec) => (
+          <div key={sec.id} style={{ marginBottom: '16px' }}>
+            {sec.title?.trim() && renderSectionHeader(sec.title)}
+            {sec.entries && sec.entries.length > 0 && (
+              <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                {sec.entries.map((e) => (
+                  <li key={e.id} style={{ marginBottom: '3px' }}>
+                    {e.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
     </div>
   )
 }

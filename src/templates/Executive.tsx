@@ -6,7 +6,7 @@ export default function Executive({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#1e3a8a'
 
   const renderSectionHeader = (title: string, borderBottomWidth: string = '2px') => (
-    <div style={{ marginBottom: '8px' }}>
+    <div style={{ marginBottom: '10px' }}>
       <div
         style={{
           fontSize: `${s.headingSize}pt`,
@@ -14,12 +14,12 @@ export default function Executive({ cv }: { cv: CVData }) {
           color: accent,
           textTransform: 'uppercase',
           letterSpacing: '1px',
-          lineHeight: 'normal'
+          lineHeight: 1.25
         }}
       >
         {title}
       </div>
-      <div style={{ height: borderBottomWidth, backgroundColor: accent, margin: '2px 0 0 0' }} />
+      <div style={{ height: borderBottomWidth, backgroundColor: accent, margin: '5px 0 0 0' }} />
     </div>
   )
 
@@ -125,7 +125,7 @@ export default function Executive({ cv }: { cv: CVData }) {
                   <span style={{ fontWeight: 'bold', fontSize: `${s.fontSize + 0.5}pt`, color: '#0f172a' }}>
                     {exp.title}
                   </span>
-                  <span style={{ fontWeight: 600, color: accent, fontSize: `${s.fontSize - 0.5}pt` }}>
+                  <span style={{ fontWeight: 600, color: accent, fontSize: `${s.fontSize - 0.5}pt`, whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                     {exp.startDate} – {exp.current ? 'Present' : exp.endDate}
                   </span>
                 </div>
@@ -153,9 +153,9 @@ export default function Executive({ cv }: { cv: CVData }) {
             {renderSectionHeader('Key Initiatives & Projects')}
             {cv.projects.map((proj) => (
               <div key={proj.id} style={{ marginBottom: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                   <span>{proj.name}</span>
-                  {proj.link && <span style={{ color: accent, fontWeight: 'normal', fontSize: '0.9em' }}>{proj.link}</span>}
+                  {proj.link && <span style={{ color: accent, fontWeight: 'normal', fontSize: '0.9em', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>{proj.link}</span>}
                 </div>
                 {proj.technologies.length > 0 && (
                   <div style={{ fontSize: '0.9em', color: '#64748b', fontStyle: 'italic', marginBottom: '2px' }}>
@@ -174,12 +174,12 @@ export default function Executive({ cv }: { cv: CVData }) {
             {renderSectionHeader('Education & Credentials')}
             {cv.education.map((edu) => (
               <div key={edu.id} style={{ marginBottom: '8px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 'bold' }}>
                   <span>
                     {edu.degree}
                     {edu.field ? ` in ${edu.field}` : ''}
                   </span>
-                  <span style={{ color: accent }}>
+                  <span style={{ color: accent, whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                     {edu.startDate} – {edu.endDate}
                   </span>
                 </div>
@@ -200,8 +200,9 @@ export default function Executive({ cv }: { cv: CVData }) {
               <div style={{ flex: 1, paddingRight: '16px' }}>
                 {renderSectionHeader('Certifications', '1px')}
                 {cv.certifications.map((c) => (
-                  <div key={c.id} style={{ marginBottom: '4px' }}>
-                    <strong>{c.name}</strong> – {c.issuer} {c.date ? `(${c.date})` : ''}
+                  <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <span><strong>{c.name}</strong> – {c.issuer}</span>
+                    {c.date && <span style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>({c.date})</span>}
                   </div>
                 ))}
               </div>
@@ -221,7 +222,10 @@ export default function Executive({ cv }: { cv: CVData }) {
             {renderSectionHeader('Honors & Accolades', '1px')}
             {cv.awards.map((a) => (
               <div key={a.id} style={{ marginBottom: '4px' }}>
-                <strong>{a.title}</strong> – {a.issuer} {a.date ? `(${a.date})` : ''}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                  <strong>{a.title} – {a.issuer}</strong>
+                  {a.date && <span style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>({a.date})</span>}
+                </div>
                 {a.description && <div style={{ color: '#475569', fontSize: '0.95em' }}>{a.description}</div>}
               </div>
             ))}
@@ -229,16 +233,20 @@ export default function Executive({ cv }: { cv: CVData }) {
         )}
 
         {/* Custom Sections */}
-        {cv.customSections.map((sec) => (
-          <div key={sec.id} style={{ marginBottom: '16px' }}>
-            {renderSectionHeader(sec.title)}
-            <ul style={{ margin: 0, paddingLeft: '20px', color: '#334155' }}>
-              {sec.entries.map((e) => (
-                <li key={e.id}>{e.text}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+        {cv.customSections
+          .filter((sec) => sec.title?.trim() || (sec.entries && sec.entries.some((e) => e.text?.trim())))
+          .map((sec) => (
+            <div key={sec.id} style={{ marginBottom: '16px' }}>
+              {sec.title?.trim() && renderSectionHeader(sec.title)}
+              {sec.entries && sec.entries.length > 0 && (
+                <ul style={{ margin: 0, paddingLeft: '20px', color: '#334155' }}>
+                  {sec.entries.map((e) => (
+                    <li key={e.id}>{e.text}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
       </div>
     </div>
   )

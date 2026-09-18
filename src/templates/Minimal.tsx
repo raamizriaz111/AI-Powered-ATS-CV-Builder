@@ -84,7 +84,7 @@ export default function Minimal({ cv }: { cv: CVData }) {
             <div key={exp.id} style={{ marginBottom: '14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontWeight: 600, color: '#1a202c', fontSize: `${s.fontSize + 0.5}pt` }}>{exp.title}</span>
-                <span style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0' }}>
+                <span style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                   {exp.startDate} — {exp.current ? 'Present' : exp.endDate}
                 </span>
               </div>
@@ -126,7 +126,7 @@ export default function Minimal({ cv }: { cv: CVData }) {
                 <span style={{ fontWeight: 600, color: '#1a202c' }}>
                   {edu.degree} {edu.field ? `in ${edu.field}` : ''}
                 </span>
-                <span style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0' }}>
+                <span style={{ fontSize: `${s.fontSize - 1}pt`, color: '#a0aec0', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>
                   {edu.startDate} — {edu.endDate}
                 </span>
               </div>
@@ -158,7 +158,7 @@ export default function Minimal({ cv }: { cv: CVData }) {
             <div key={p.id} style={{ marginBottom: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontWeight: 600, color: '#1a202c' }}>{p.name}</span>
-                {p.link && <span style={{ fontSize: '0.85em', color: '#718096' }}>{p.link}</span>}
+                {p.link && <span style={{ fontSize: '0.85em', color: '#718096', whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '12px' }}>{p.link}</span>}
               </div>
               {p.technologies.length > 0 && (
                 <div style={{ fontSize: '0.85em', color: '#a0aec0', marginBottom: '2px' }}>
@@ -188,8 +188,8 @@ export default function Minimal({ cv }: { cv: CVData }) {
           </h3>
           <div>
             {cv.skills.map((cat) => (
-              <div key={cat.id} style={{ display: 'flex', marginBottom: '4px' }}>
-                <span style={{ fontWeight: 600, minWidth: '140px', color: '#2d3748', marginRight: '8px' }}>{cat.name}</span>
+              <div key={cat.id} style={{ display: 'flex', alignItems: 'baseline', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, width: '200px', minWidth: '200px', flexShrink: 0, color: '#2d3748', marginRight: '8px' }}>{cat.name}</span>
                 <span style={{ color: '#4a5568' }}>{cat.skills.join(', ')}</span>
               </div>
             ))}
@@ -267,27 +267,29 @@ export default function Minimal({ cv }: { cv: CVData }) {
       )}
 
       {/* Custom Sections */}
-      {cv.customSections.map((sec) => (
-        <div key={sec.id} style={{ marginBottom: '16px' }}>
-          <h3
-            style={{
-              fontSize: `${s.fontSize - 1}pt`,
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '2px',
-              color: '#a0aec0',
-              marginBottom: '8px'
-            }}
-          >
-            {sec.title}
-          </h3>
-          <ul style={{ margin: 0, paddingLeft: '16px', color: '#4a5568' }}>
-            {sec.entries.map((e) => (
-              <li key={e.id}>{e.text}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {cv.customSections
+        .filter((sec) => sec.title?.trim() || sec.entries?.some((e) => e.text?.trim()))
+        .map((sec) => (
+          <div key={sec.id} style={{ marginBottom: '16px' }}>
+            <h3
+              style={{
+                fontSize: `${s.fontSize - 1}pt`,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                color: '#a0aec0',
+                marginBottom: '8px'
+              }}
+            >
+              {sec.title}
+            </h3>
+            <ul style={{ margin: 0, paddingLeft: '16px', color: '#4a5568' }}>
+              {sec.entries.map((e) => (
+                <li key={e.id}>{e.text}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
     </div>
   )
 }
