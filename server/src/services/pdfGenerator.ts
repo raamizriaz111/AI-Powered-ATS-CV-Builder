@@ -116,12 +116,14 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .sidebar { width: 33%; background-color: ${accent}; color: #ffffff; padding: 18mm 14mm; display: flex; flex-direction: column; gap: 16px; }
 .sidebar h1 { font-size: ${headingSize + 6}pt; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
 .sidebar .job-title { font-size: ${fontSize + 1}pt; opacity: 0.9; margin-bottom: 12px; }
-.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 6px; margin-bottom: 6px; }
+.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0; line-height: 1.2; }
+.sidebar .sidebar-line { height: 1px; background-color: rgba(255,255,255,0.35); margin: 6px 0 6px 0; }
 .sidebar .contact-item { font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; word-break: break-all; opacity: 0.95; }
-.tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 3px; font-size: ${fontSize - 1.5}pt; margin: 2px; }
+.tag { display: inline-block; vertical-align: middle; background: rgba(255,255,255,0.18); padding: 2px 8px; border-radius: 4px; font-size: ${fontSize - 1.5}pt; margin-right: 4px; margin-bottom: 4px; line-height: 1.3; }
 
 .main { width: 67%; padding: 18mm 16mm; display: flex; flex-direction: column; gap: 16px; }
-.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 8px; margin-bottom: 8px; }
+.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1.2; }
+.main .main-line { height: 2px; background-color: ${accent}; margin: 7px 0 7px 0; }
 .exp-header { display: flex; justify-content: space-between; font-weight: bold; }
 .exp-sub { font-weight: 600; color: #718096; font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; }
 ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
@@ -135,6 +137,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
 
   <div>
     <h3>Contact</h3>
+    <div class="sidebar-line"></div>
     ${p.email ? `<div class="contact-item">✉ ${p.email}</div>` : ''}
     ${p.phone ? `<div class="contact-item">☎ ${p.phone}</div>` : ''}
     ${p.location ? `<div class="contact-item">📍 ${p.location}</div>` : ''}
@@ -146,31 +149,35 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
   ${skills.length ? `
   <div>
     <h3>Skills</h3>
+    <div class="sidebar-line"></div>
     ${skills.map(cat => `
       <div style="margin-bottom:8px;">
-        <div style="font-weight:bold; font-size:${fontSize - 0.5}pt; margin-bottom:2px;">${cat.name}</div>
-        <div>${cat.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+        <div style="font-weight:bold; font-size:${fontSize - 0.5}pt; margin-bottom:4px;">${cat.name}</div>
+        <div style="line-height:1.8;">${cat.skills.map(s => `<span class="tag">${s}</span>`).join('')}</div>
       </div>`).join('')}
   </div>` : ''}
 
   ${languages.length ? `
   <div>
     <h3>Languages</h3>
+    <div class="sidebar-line"></div>
     ${languages.map(l => `<div style="margin-bottom:3px; font-size:${fontSize - 0.5}pt;"><strong>${l.name}</strong> <span style="opacity:0.85;">(${l.proficiency})</span></div>`).join('')}
   </div>` : ''}
 
   ${certifications.length ? `
   <div>
     <h3>Certifications</h3>
+    <div class="sidebar-line"></div>
     ${certifications.map(c => `<div style="margin-bottom:6px; font-size:${fontSize - 1}pt;"><div style="font-weight:bold;">${c.name}</div><div style="opacity:0.85;">${c.issuer} ${c.date ? `• ${fmt(c.date)}` : ''}</div></div>`).join('')}
   </div>` : ''}
 </div>
 
 <div class="main">
-  ${summary ? `<div><h2>Profile</h2><div style="color:#4a5568;">${summary}</div></div>` : ''}
+  ${summary ? `<div><h2>Profile</h2><div class="main-line"></div><div style="color:#4a5568;">${summary}</div></div>` : ''}
   ${experience.length ? `
   <div>
     <h2>Experience</h2>
+    <div class="main-line"></div>
     ${experience.map(e => `
       <div style="margin-bottom:12px;">
         <div class="exp-header"><span>${e.title}</span><span class="nowrap-date" style="color:${accent}; font-size:0.9em;">${fmt(e.startDate)} – ${e.current ? 'Present' : fmt(e.endDate)}</span></div>
@@ -182,6 +189,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
   ${projects.length ? `
   <div>
     <h2>Projects</h2>
+    <div class="main-line"></div>
     ${projects.map(pr => `
       <div style="margin-bottom:10px;">
         <div class="exp-header"><span>${pr.name}</span>${pr.link ? `<span class="nowrap-date" style="color:${accent}; font-size:0.85em;">${pr.link}</span>` : ''}</div>
@@ -193,6 +201,7 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
   ${education.length ? `
   <div>
     <h2>Education</h2>
+    <div class="main-line"></div>
     ${education.map(edu => `
       <div style="margin-bottom:8px;">
         <div class="exp-header"><span>${edu.degree}${edu.field ? ` in ${edu.field}` : ''}</span><span class="nowrap-date" style="color:${accent}; font-size:0.9em;">${fmt(edu.startDate)} – ${fmt(edu.endDate)}</span></div>
@@ -203,12 +212,14 @@ ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
   ${awards.length ? `
   <div>
     <h2>Awards</h2>
+    <div class="main-line"></div>
     ${awards.map(a => `<div style="margin-bottom:4px;"><strong>${a.title}</strong> – ${a.issuer} ${a.date ? `(${fmt(a.date)})` : ''}</div>`).join('')}
   </div>` : ''}
 
   ${validCustomSections.map(sec => `
   <div>
     <h2>${sec.title}</h2>
+    <div class="main-line"></div>
     <ul>${sec.entries.map(e => `<li>${e.text}</li>`).join('')}</ul>
   </div>`).join('')}
 </div>

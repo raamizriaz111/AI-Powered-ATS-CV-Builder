@@ -5,21 +5,21 @@ export default function Executive({ cv }: { cv: CVData }) {
   const p = cv.personal
   const accent = s.accentColor || '#1e3a8a'
 
-  const renderSectionHeader = (title: string, borderBottomWidth: string = '2px') => (
-    <div
-      style={{
-        fontSize: `${s.headingSize}pt`,
-        fontWeight: 'bold',
-        color: accent,
-        textTransform: 'uppercase',
-        letterSpacing: '1px',
-        borderBottom: `${borderBottomWidth} solid ${accent}`,
-        paddingBottom: '8px',
-        marginBottom: '8px',
-        lineHeight: 1.2
-      }}
-    >
-      {title}
+  const renderSectionHeader = (title: string, borderWidth: string = '2px') => (
+    <div style={{ marginBottom: '12px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          color: accent,
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          lineHeight: 1.2
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: borderWidth, backgroundColor: accent, margin: '6px 0 6px 0' }} />
     </div>
   )
 

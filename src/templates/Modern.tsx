@@ -6,37 +6,37 @@ export default function Modern({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#2563eb'
 
   const renderSidebarHeader = (title: string) => (
-    <div
-      style={{
-        fontSize: `${s.fontSize + 1}pt`,
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        letterSpacing: '1px',
-        color: '#ffffff',
-        borderBottom: '1px solid rgba(255,255,255,0.35)',
-        paddingBottom: '6px',
-        marginBottom: '6px',
-        lineHeight: 1.2
-      }}
-    >
-      {title}
+    <div style={{ marginBottom: '12px' }}>
+      <div
+        style={{
+          fontSize: `${s.fontSize + 1}pt`,
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          color: '#ffffff',
+          lineHeight: 1.2
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '6px 0 6px 0' }} />
     </div>
   )
 
   const renderMainHeader = (title: string) => (
-    <div
-      style={{
-        fontSize: `${s.headingSize}pt`,
-        fontWeight: 'bold',
-        color: accent,
-        letterSpacing: '0.5px',
-        borderBottom: `2px solid ${accent}`,
-        paddingBottom: '8px',
-        marginBottom: '8px',
-        lineHeight: 1.2
-      }}
-    >
-      {title}
+    <div style={{ marginBottom: '12px' }}>
+      <div
+        style={{
+          fontSize: `${s.headingSize}pt`,
+          fontWeight: 'bold',
+          color: accent,
+          letterSpacing: '0.5px',
+          lineHeight: 1.2
+        }}
+      >
+        {title}
+      </div>
+      <div style={{ height: '2px', backgroundColor: accent, margin: '7px 0 7px 0' }} />
     </div>
   )
 
@@ -137,7 +137,7 @@ export default function Modern({ cv }: { cv: CVData }) {
                 <div style={{ fontWeight: 600, fontSize: `${s.fontSize - 0.5}pt`, marginBottom: '4px' }}>
                   {cat.name}
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <div style={{ lineHeight: 1.8, marginBottom: '2px' }}>
                   {cat.skills.map((skill, i) => (
                     <span
                       key={i}
@@ -148,7 +148,9 @@ export default function Modern({ cv }: { cv: CVData }) {
                         fontSize: `${s.fontSize - 1.5}pt`,
                         marginRight: '4px',
                         marginBottom: '4px',
-                        display: 'inline-block'
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        lineHeight: 1.3
                       }}
                     >
                       {skill}
