@@ -6,17 +6,23 @@ import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
 
 export async function generateClientPDF(cv: CVData): Promise<Blob> {
-  const templateConfig = getTemplate(cv.settings?.template || 'classic-ats')
-  const TemplateComponent = templateConfig.component
-
-  // Render template to HTML string with inline styles
-  const element = React.createElement(TemplateComponent, { cv })
-  const htmlMarkup = renderToStaticMarkup(element)
+  // Prefer live preview DOM markup if available for 100% computed fidelity
+  const livePreviewEl = typeof document !== 'undefined' ? document.getElementById('cv-page-print-container') : null
+  let htmlMarkup: string
+  if (livePreviewEl) {
+    htmlMarkup = livePreviewEl.innerHTML
+  } else {
+    const templateConfig = getTemplate(cv.settings?.template || 'classic-ats')
+    const TemplateComponent = templateConfig.component
+    const element = React.createElement(TemplateComponent, { cv })
+    htmlMarkup = renderToStaticMarkup(element)
+  }
 
   // Mount offscreen at top:0 left:0 with exact A4 210mm width and 297mm minHeight
   // Positioned behind the screen with z-index: -9999 so coordinates are valid for html2canvas
   const container = document.createElement('div')
   container.id = 'cv-client-pdf-render-mount'
+  container.className = 'cv-print-container'
   container.style.cssText = `
     position: fixed;
     top: 0;
@@ -30,7 +36,6 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
     margin: 0;
     padding: 0;
     pointer-events: none;
-    line-height: normal;
   `
   container.innerHTML = htmlMarkup
   document.body.appendChild(container)
@@ -55,26 +60,36 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
       windowWidth: container.offsetWidth || 794
     })
 
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
-      compress: true
-    })
-
     const imgWidth = 210 // A4 width in mm
     const pageMmHeight = 297 // A4 height in mm
+    const naturalMmHeight = (canvas.height / canvas.width) * imgWidth
     const pagePxHeight = Math.floor(canvas.width * (pageMmHeight / imgWidth))
 
-    // If CV height is within 1.25x of 1 A4 page (e.g. content slightly exceeds 297mm by margins or line heights),
-    // proportionally fit it onto ONE exact A4 page without creating an empty 2nd page!
-    const singlePageThreshold = pagePxHeight * 1.25
+    // If CV height is within single page range (up to 1.35x A4),
+    // output as 1 exact page matching the preview with 100% PRESERVED aspect ratio!
+    const singlePageThreshold = pagePxHeight * 1.35
+
+    let pdf: jsPDF
 
     if (canvas.height <= singlePageThreshold) {
+      // 1-Page Document: preserve exact aspect ratio so spaces, lines, and fonts match preview 100%
+      const pdfHeight = Math.max(pageMmHeight, naturalMmHeight)
+      pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [imgWidth, pdfHeight],
+        compress: true
+      })
       const imgData = canvas.toDataURL('image/png')
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pageMmHeight, undefined, 'FAST')
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, naturalMmHeight, undefined, 'FAST')
     } else {
       // True multi-page CV (e.g. 2 full pages or more)
+      pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+        compress: true
+      })
       const totalPages = Math.ceil(canvas.height / pagePxHeight)
       for (let i = 0; i < totalPages; i++) {
         const remainingPx = canvas.height - i * pagePxHeight
