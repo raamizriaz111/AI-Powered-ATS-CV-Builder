@@ -18,7 +18,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       >
         {title}
       </div>
-      <div style={{ height: '1.5px', backgroundColor: '#000', marginTop: '6px', marginBottom: '7px' }} />
+      <div style={{ height: '1.5px', backgroundColor: '#000', marginTop: '10px', marginBottom: '10px' }} />
     </div>
   )
 

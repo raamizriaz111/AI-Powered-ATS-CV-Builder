@@ -19,7 +19,7 @@ export default function Executive({ cv }: { cv: CVData }) {
       >
         {title}
       </div>
-      <div style={{ height: borderWidth, backgroundColor: accent, marginTop: '6px', marginBottom: '7px' }} />
+      <div style={{ height: borderWidth, backgroundColor: accent, marginTop: '10px', marginBottom: '10px' }} />
     </div>
   )
 

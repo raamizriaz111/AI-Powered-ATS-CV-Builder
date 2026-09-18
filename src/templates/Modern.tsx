@@ -6,7 +6,7 @@ export default function Modern({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#2563eb'
 
   // ── Sidebar section heading + white separator line ──────────────────────────
-  // Divider line centered directly underneath the heading and above section content
+  // Generous, equal space above and below the divider line (11px / 11px)
   const renderSidebarHeader = (title: string) => (
     <div style={{ marginBottom: '0' }}>
       <div
@@ -25,15 +25,15 @@ export default function Modern({ cv }: { cv: CVData }) {
         style={{
           height: '1px',
           backgroundColor: 'rgba(255,255,255,0.4)',
-          marginTop: '7px',
-          marginBottom: '8px'
+          marginTop: '11px',
+          marginBottom: '11px'
         }}
       />
     </div>
   )
 
   // ── Main-area section heading + accent-colored separator line ───────────────
-  // Divider line centered directly underneath the heading and above section content
+  // Generous, equal space above and below the divider line (11px / 11px)
   const renderMainHeader = (title: string) => (
     <div style={{ marginBottom: '0' }}>
       <div
@@ -51,8 +51,8 @@ export default function Modern({ cv }: { cv: CVData }) {
         style={{
           height: '2px',
           backgroundColor: accent,
-          marginTop: '7px',
-          marginBottom: '8px'
+          marginTop: '11px',
+          marginBottom: '11px'
         }}
       />
     </div>
@@ -60,9 +60,10 @@ export default function Modern({ cv }: { cv: CVData }) {
 
   // ── Skill tag: perfectly aligned with equal height, centered text ──────────
   // Using inline-table + table-cell:
-  // 1. Every box has equal 22px height and consistent spacing
-  // 2. Native vertical-align: middle centers text vertically with no top/bottom shift
-  // 3. text-align: center centers text horizontally with no left/right shift
+  // 1. Equal 22px height across every box
+  // 2. Native vertical-align: middle + 2px optical adjustment for true dead-center text
+  // 3. text-align: center for exact horizontal centering
+  // 4. Equal spacing (marginRight 5px, marginBottom 6px) between all boxes
   const renderTag = (skill: string, i: number) => (
     <span
       key={i}
@@ -83,8 +84,10 @@ export default function Modern({ cv }: { cv: CVData }) {
           display: 'table-cell',
           verticalAlign: 'middle',
           textAlign: 'center',
-          paddingLeft: '8px',
-          paddingRight: '8px',
+          paddingTop: '2px',
+          paddingBottom: '0px',
+          paddingLeft: '9px',
+          paddingRight: '9px',
           lineHeight: 1,
           whiteSpace: 'nowrap',
           color: '#ffffff',

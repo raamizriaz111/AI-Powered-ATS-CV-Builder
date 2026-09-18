@@ -116,15 +116,14 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .sidebar { width: 33%; background-color: ${accent}; color: #ffffff; padding: 18mm 14mm; display: flex; flex-direction: column; gap: 16px; }
 .sidebar h1 { font-size: ${headingSize + 6}pt; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
 .sidebar .job-title { font-size: ${fontSize + 1}pt; opacity: 0.9; margin-bottom: 12px; }
-.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0; line-height: 1.2; }
-.sidebar .sidebar-line { height: 1px; background-color: rgba(255,255,255,0.4); margin: 7px 0 8px 0; }
+.sidebar .sidebar-line { height: 1px; background-color: rgba(255,255,255,0.4); margin: 11px 0 11px 0; }
 .sidebar .contact-item { font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; word-break: break-all; opacity: 0.95; }
 .tag { display: inline-table; vertical-align: top; background: rgba(255,255,255,0.18); border-radius: 4px; font-size: ${fontSize - 1.5}pt; margin-right: 5px; margin-bottom: 6px; height: 22px; box-sizing: border-box; }
-.tag-inner { display: table-cell; vertical-align: middle; text-align: center; padding: 0 8px; line-height: 1; color: #fff; font-weight: 500; white-space: nowrap; }
+.tag-inner { display: table-cell; vertical-align: middle; text-align: center; padding: 2px 9px 0 9px; line-height: 1; color: #fff; font-weight: 500; white-space: nowrap; }
 
 .main { width: 67%; padding: 18mm 16mm; display: flex; flex-direction: column; gap: 16px; }
 .main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; letter-spacing: 0.5px; margin-bottom: 0; line-height: 1.2; }
-.main .main-line { height: 2px; background-color: ${accent}; margin: 7px 0 8px 0; }
+.main .main-line { height: 2px; background-color: ${accent}; margin: 11px 0 11px 0; }
 .exp-header { display: flex; justify-content: space-between; font-weight: bold; }
 .exp-sub { font-weight: 600; color: #718096; font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; }
 ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }

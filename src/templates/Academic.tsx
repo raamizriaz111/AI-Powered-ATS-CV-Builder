@@ -18,7 +18,7 @@ export default function Academic({ cv }: { cv: CVData }) {
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: '#d1d5db', marginTop: '6px', marginBottom: '7px' }} />
+      <div style={{ height: '1px', backgroundColor: '#d1d5db', marginTop: '10px', marginBottom: '10px' }} />
     </div>
   )
 
