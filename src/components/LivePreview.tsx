@@ -40,7 +40,7 @@ export default function LivePreview({ cvData }: Props) {
   return (
     <div className="flex flex-col h-full bg-gray-900 overflow-hidden">
       {/* Top Controls: Template Switcher & Zoom */}
-      <div className="p-2 sm:p-2.5 border-b border-gray-800 bg-gray-950 flex flex-col gap-2 shrink-0">
+      <div className="p-2 sm:p-2.5 border-b border-gray-800 bg-gray-950 flex flex-col gap-2 shrink-0 no-print">
         {/* Template Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none touch-pan-x">
           <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider pl-1 pr-1 shrink-0">
@@ -103,9 +103,10 @@ export default function LivePreview({ cvData }: Props) {
       </div>
 
       {/* Scaled A4 Preview Container */}
-      <div className="flex-1 overflow-auto p-2 sm:p-4 flex justify-center items-start bg-gray-950/40">
+      <div className="flex-1 overflow-auto p-2 sm:p-4 flex justify-center items-start bg-gray-950/40 print:p-0 print:bg-white print:overflow-visible">
         <div
-          className="bg-white shadow-2xl origin-top transition-transform duration-150 shrink-0"
+          id="cv-page-print-container"
+          className="cv-print-container bg-white shadow-2xl origin-top transition-transform duration-150 shrink-0"
           style={{
             width: '210mm',
             minHeight: '297mm',

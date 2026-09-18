@@ -65,18 +65,21 @@ export async function generateClientPDF(cv: CVData): Promise<Blob> {
     const imgWidth = 210 // A4 width in mm
     const pageMmHeight = 297 // A4 height in mm
     const pagePxHeight = Math.floor(canvas.width * (pageMmHeight / imgWidth))
-    const totalPages = Math.ceil(canvas.height / pagePxHeight)
 
-    // Single-page CV (with 40px subpixel margin buffer): render 1 exact page
-    if (totalPages <= 1 || canvas.height <= pagePxHeight + 40) {
-      const imgHeight = Math.min(pageMmHeight, (canvas.height * imgWidth) / canvas.width)
+    // If CV height is within 1.25x of 1 A4 page (e.g. content slightly exceeds 297mm by margins or line heights),
+    // proportionally fit it onto ONE exact A4 page without creating an empty 2nd page!
+    const singlePageThreshold = pagePxHeight * 1.25
+
+    if (canvas.height <= singlePageThreshold) {
       const imgData = canvas.toDataURL('image/png')
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight, undefined, 'FAST')
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, pageMmHeight, undefined, 'FAST')
     } else {
-      // Multi-page CV: cleanly slice canvas into exact A4 pages without trailing blank pages
+      // True multi-page CV (e.g. 2 full pages or more)
+      const totalPages = Math.ceil(canvas.height / pagePxHeight)
       for (let i = 0; i < totalPages; i++) {
         const remainingPx = canvas.height - i * pagePxHeight
-        if (remainingPx <= 40) break // Ignore tiny subpixel whitespace overflow
+        // If the trailing page has less than 12% of a page (just bottom whitespace padding or stray sliver), omit it
+        if (i > 0 && remainingPx <= pagePxHeight * 0.12) break
 
         const chunkHeight = Math.min(pagePxHeight, remainingPx)
         const pageCanvas = document.createElement('canvas')

@@ -84,9 +84,9 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-gray-950">
+    <div className="h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-gray-950 print:h-auto print:bg-white print:overflow-visible">
       {/* Top Header Bar */}
-      <div className="h-14 border-b border-gray-800 bg-gray-900 flex items-center justify-between px-3 sm:px-4 shrink-0 gap-2">
+      <div className="h-14 border-b border-gray-800 bg-gray-900 flex items-center justify-between px-3 sm:px-4 shrink-0 gap-2 no-print">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
           <button onClick={() => navigate('/dashboard')} className="text-gray-400 hover:text-white p-1" title="Back to Dashboard">
             <ArrowLeft className="w-5 h-5 shrink-0" />
@@ -132,7 +132,7 @@ export default function BuilderPage() {
       </div>
 
       {/* Mobile Top Navigation Tabs (Editor vs Preview vs ATS Score) */}
-      <div className="lg:hidden flex border-b border-gray-800 bg-gray-900/90 backdrop-blur-sm shrink-0">
+      <div className="lg:hidden flex border-b border-gray-800 bg-gray-900/90 backdrop-blur-sm shrink-0 no-print">
         <button
           onClick={() => setMobileTab('editor')}
           className={`flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 border-b-2 transition-colors ${
@@ -179,7 +179,7 @@ export default function BuilderPage() {
       <div className="flex-1 flex overflow-hidden relative">
         {/* Left Sidebar (Desktop: always visible; Mobile: slide-over drawer) */}
         <div 
-          className={`absolute md:static inset-y-0 left-0 w-64 z-30 transition-transform duration-200 ease-in-out bg-gray-900 shadow-2xl md:shadow-none ${
+          className={`no-print absolute md:static inset-y-0 left-0 w-64 z-30 transition-transform duration-200 ease-in-out bg-gray-900 shadow-2xl md:shadow-none ${
             mobileMenu ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
           }`}
         >
@@ -197,27 +197,27 @@ export default function BuilderPage() {
         {/* Mobile Backdrop Overlay when sidebar drawer is open */}
         {mobileMenu && (
           <div 
-            className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-20"
+            className="no-print md:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-20"
             onClick={() => setMobileMenu(false)}
           />
         )}
 
         {/* Center Content / Mobile Views */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden print:overflow-visible">
           {/* MOBILE VIEW HANDLING */}
-          <div className="lg:hidden flex-1 overflow-y-auto">
+          <div className="lg:hidden flex-1 overflow-y-auto print:overflow-visible">
             {mobileTab === 'editor' && (
-              <div className="p-3 sm:p-6 pb-16">
+              <div className="p-3 sm:p-6 pb-16 print:hidden">
                 {renderSection()}
               </div>
             )}
             {mobileTab === 'preview' && (
-              <div className="h-full">
+              <div className="h-full print:h-auto">
                 <LivePreview cvData={currentCV} />
               </div>
             )}
             {mobileTab === 'ats' && (
-              <div className="p-4 sm:p-6 space-y-6 pb-16">
+              <div className="p-4 sm:p-6 space-y-6 pb-16 print:hidden">
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
                     Target Job Description (Optional)
@@ -234,15 +234,15 @@ export default function BuilderPage() {
             )}
           </div>
 
-          {/* DESKTOP VIEW (Identical to before) */}
-          <div className="hidden lg:flex flex-1 overflow-hidden">
-            <div className="flex-1 overflow-y-auto bg-gray-950 border-r border-gray-800 p-6">
+          {/* DESKTOP VIEW */}
+          <div className="hidden lg:flex flex-1 overflow-hidden print:overflow-visible">
+            <div className="flex-1 overflow-y-auto bg-gray-950 border-r border-gray-800 p-6 no-print">
               {renderSection()}
             </div>
 
             {/* Desktop Right Side Panel */}
-            <div className="flex flex-col w-[440px] bg-gray-900 border-l border-gray-800 shrink-0">
-              <div className="flex border-b border-gray-800 bg-gray-950">
+            <div className="flex flex-col w-[440px] bg-gray-900 border-l border-gray-800 shrink-0 print:w-full print:border-none print:bg-white print:overflow-visible">
+              <div className="flex border-b border-gray-800 bg-gray-950 no-print">
                 <button 
                   className={`flex-1 py-3 text-sm font-medium border-b-2 transition-colors ${activeTab === 'preview' ? 'border-blue-500 text-blue-400 bg-gray-900' : 'border-transparent text-gray-400 hover:text-gray-200'}`}
                   onClick={() => setActiveTab('preview')}

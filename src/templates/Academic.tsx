@@ -13,12 +13,12 @@ export default function Academic({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#111827',
-          lineHeight: 1.25
+          lineHeight: 1.3
         }}
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '5px 0 0 0' }} />
+      <div style={{ height: '1px', backgroundColor: '#d1d5db', margin: '6px 0 6px 0' }} />
     </div>
   )
 

@@ -14,29 +14,29 @@ export default function Modern({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#ffffff',
-          lineHeight: 1.25
+          lineHeight: 1.3
         }}
       >
         {title}
       </div>
-      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '5px 0 0 0' }} />
+      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.35)', margin: '6px 0 6px 0' }} />
     </div>
   )
 
   const renderMainHeader = (title: string) => (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: '8px' }}>
       <div
         style={{
           fontSize: `${s.headingSize}pt`,
           fontWeight: 'bold',
           color: accent,
           letterSpacing: '0.5px',
-          lineHeight: 1.25
+          lineHeight: 1.3
         }}
       >
         {title}
       </div>
-      <div style={{ height: '2px', backgroundColor: accent, margin: '5px 0 0 0' }} />
+      <div style={{ height: '2px', backgroundColor: accent, margin: '6px 0 6px 0' }} />
     </div>
   )
 
