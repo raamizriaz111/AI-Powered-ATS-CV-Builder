@@ -13,8 +13,8 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
         letterSpacing: '0.5px',
         color: '#000',
         borderBottom: '1.5px solid #000',
-        paddingBottom: '7px',
-        marginBottom: '10px',
+        paddingBottom: '8px',
+        marginBottom: '8px',
         lineHeight: 1.2
       }}
     >

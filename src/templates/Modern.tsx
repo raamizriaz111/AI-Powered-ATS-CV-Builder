@@ -15,7 +15,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         color: '#ffffff',
         borderBottom: '1px solid rgba(255,255,255,0.35)',
         paddingBottom: '6px',
-        marginBottom: '10px',
+        marginBottom: '6px',
         lineHeight: 1.2
       }}
     >
@@ -31,8 +31,8 @@ export default function Modern({ cv }: { cv: CVData }) {
         color: accent,
         letterSpacing: '0.5px',
         borderBottom: `2px solid ${accent}`,
-        paddingBottom: '7px',
-        marginBottom: '10px',
+        paddingBottom: '8px',
+        marginBottom: '8px',
         lineHeight: 1.2
       }}
     >

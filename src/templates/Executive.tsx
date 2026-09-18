@@ -14,8 +14,8 @@ export default function Executive({ cv }: { cv: CVData }) {
         textTransform: 'uppercase',
         letterSpacing: '1px',
         borderBottom: `${borderBottomWidth} solid ${accent}`,
-        paddingBottom: '7px',
-        marginBottom: '10px',
+        paddingBottom: '8px',
+        marginBottom: '8px',
         lineHeight: 1.2
       }}
     >

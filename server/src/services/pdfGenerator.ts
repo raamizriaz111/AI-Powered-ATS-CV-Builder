@@ -29,7 +29,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 h1 { font-size: ${headingSize + 8}pt; font-weight: bold; text-align: center; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
 .title { font-size: ${fontSize + 1}pt; text-align: center; font-weight: bold; color: #333; margin-bottom: 4px; }
 .contact { text-align: center; font-size: ${fontSize - 0.5}pt; color: #333; margin-bottom: 14px; }
-h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #000; padding-bottom: 7px; margin: 14px 0 10px; }
+h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #000; padding-bottom: 8px; margin: 14px 0 8px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 .sub-row { display: flex; justify-content: space-between; font-style: italic; color: #333; margin-bottom: 2px; }
 ul { margin: 3px 0 6px 20px; } li { margin-bottom: 2px; }
@@ -116,12 +116,12 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .sidebar { width: 33%; background-color: ${accent}; color: #ffffff; padding: 18mm 14mm; display: flex; flex-direction: column; gap: 16px; }
 .sidebar h1 { font-size: ${headingSize + 6}pt; font-weight: 800; line-height: 1.1; margin-bottom: 4px; }
 .sidebar .job-title { font-size: ${fontSize + 1}pt; opacity: 0.9; margin-bottom: 12px; }
-.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 6px; margin-bottom: 10px; }
+.sidebar h3 { font-size: ${fontSize + 1}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.35); padding-bottom: 6px; margin-bottom: 6px; }
 .sidebar .contact-item { font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; word-break: break-all; opacity: 0.95; }
 .tag { display: inline-block; background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 3px; font-size: ${fontSize - 1.5}pt; margin: 2px; }
 
 .main { width: 67%; padding: 18mm 16mm; display: flex; flex-direction: column; gap: 16px; }
-.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 7px; margin-bottom: 10px; }
+.main h2 { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 8px; margin-bottom: 8px; }
 .exp-header { display: flex; justify-content: space-between; font-weight: bold; }
 .exp-sub { font-weight: 600; color: #718096; font-size: ${fontSize - 0.5}pt; margin-bottom: 4px; }
 ul { margin: 0 0 8px 16px; color: #4a5568; } li { margin-bottom: 3px; }
@@ -304,7 +304,7 @@ body { font-family: ${font}; font-size: ${fontSize}pt; line-height: ${s.lineSpac
 .banner .job-title { font-size: ${fontSize + 2}pt; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; opacity: 0.95; }
 .sub-bar { background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 6px 28px; display: flex; justify-content: center; gap: 18px; font-size: ${fontSize - 1}pt; color: #475569; }
 .content { padding: ${s.margins || 0.6}in; }
-.sec-title { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 7px; margin: 14px 0 10px; text-transform: uppercase; letter-spacing: 1px; }
+.sec-title { font-size: ${headingSize}pt; font-weight: bold; color: ${accent}; border-bottom: 2px solid ${accent}; padding-bottom: 8px; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 1px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 .nowrap-date { white-space: nowrap; flex-shrink: 0; margin-left: 12px; }
@@ -472,7 +472,7 @@ h1 { font-size: ${headingSize + 8}pt; font-weight: normal; letter-spacing: 1.5px
 .job-title { font-size: ${fontSize + 1}pt; font-style: italic; color: #4b5563; margin-bottom: 6px; }
 .contact { font-size: ${fontSize - 1}pt; color: #4b5563; }
 .cv-sub { text-align: center; font-style: italic; color: #6b7280; font-size: ${fontSize - 1}pt; margin-bottom: 12px; }
-h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #d1d5db; padding-bottom: 7px; margin: 14px 0 10px; }
+h2 { font-size: ${headingSize}pt; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #d1d5db; padding-bottom: 8px; margin: 14px 0 8px; }
 .row { display: flex; justify-content: space-between; font-weight: bold; }
 ul { margin: 0 0 6px 18px; color: #334155; } li { margin-bottom: 2px; }
 .skill-row { display: flex; align-items: baseline; margin-bottom: 3px; }

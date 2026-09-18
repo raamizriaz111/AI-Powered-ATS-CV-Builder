@@ -13,8 +13,8 @@ export default function Academic({ cv }: { cv: CVData }) {
         letterSpacing: '1px',
         color: '#111827',
         borderBottom: '1px solid #d1d5db',
-        paddingBottom: '7px',
-        marginBottom: '10px',
+        paddingBottom: '8px',
+        marginBottom: '8px',
         lineHeight: 1.2
       }}
     >
