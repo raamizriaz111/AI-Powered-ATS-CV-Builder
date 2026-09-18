@@ -5,7 +5,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
   const p = cv.personal
 
   const renderSectionHeader = (title: string) => (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: '0' }}>
       <div
         style={{
           fontSize: `${s.headingSize}pt`,
@@ -18,7 +18,7 @@ export default function ClassicATS({ cv }: { cv: CVData }) {
       >
         {title}
       </div>
-      <div style={{ height: '1.5px', backgroundColor: '#000', margin: '6px 0 6px 0' }} />
+      <div style={{ height: '1.5px', backgroundColor: '#000', marginTop: '6px', marginBottom: '7px' }} />
     </div>
   )
 

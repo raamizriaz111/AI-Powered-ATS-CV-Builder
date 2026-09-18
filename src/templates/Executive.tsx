@@ -6,7 +6,7 @@ export default function Executive({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#1e3a8a'
 
   const renderSectionHeader = (title: string, borderWidth: string = '2px') => (
-    <div style={{ marginBottom: '12px' }}>
+    <div style={{ marginBottom: '0' }}>
       <div
         style={{
           fontSize: `${s.headingSize}pt`,
@@ -19,7 +19,7 @@ export default function Executive({ cv }: { cv: CVData }) {
       >
         {title}
       </div>
-      <div style={{ height: borderWidth, backgroundColor: accent, margin: '6px 0 6px 0' }} />
+      <div style={{ height: borderWidth, backgroundColor: accent, marginTop: '6px', marginBottom: '7px' }} />
     </div>
   )
 

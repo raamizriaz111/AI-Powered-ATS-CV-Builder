@@ -6,8 +6,9 @@ export default function Modern({ cv }: { cv: CVData }) {
   const accent = s.accentColor || '#2563eb'
 
   // ── Sidebar section heading + white separator line ──────────────────────────
+  // Divider line centered directly underneath the heading and above section content
   const renderSidebarHeader = (title: string) => (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: '0' }}>
       <div
         style={{
           fontSize: `${s.fontSize + 1}pt`,
@@ -15,8 +16,7 @@ export default function Modern({ cv }: { cv: CVData }) {
           textTransform: 'uppercase',
           letterSpacing: '1px',
           color: '#ffffff',
-          lineHeight: 1,
-          paddingBottom: '5px'
+          lineHeight: 1.2
         }}
       >
         {title}
@@ -25,6 +25,7 @@ export default function Modern({ cv }: { cv: CVData }) {
         style={{
           height: '1px',
           backgroundColor: 'rgba(255,255,255,0.4)',
+          marginTop: '7px',
           marginBottom: '8px'
         }}
       />
@@ -32,16 +33,16 @@ export default function Modern({ cv }: { cv: CVData }) {
   )
 
   // ── Main-area section heading + accent-colored separator line ───────────────
+  // Divider line centered directly underneath the heading and above section content
   const renderMainHeader = (title: string) => (
-    <div style={{ marginBottom: '10px' }}>
+    <div style={{ marginBottom: '0' }}>
       <div
         style={{
           fontSize: `${s.headingSize}pt`,
           fontWeight: 'bold',
           color: accent,
           letterSpacing: '0.5px',
-          lineHeight: 1,
-          paddingBottom: '6px'
+          lineHeight: 1.2
         }}
       >
         {title}
@@ -50,37 +51,48 @@ export default function Modern({ cv }: { cv: CVData }) {
         style={{
           height: '2px',
           backgroundColor: accent,
+          marginTop: '7px',
           marginBottom: '8px'
         }}
       />
     </div>
   )
 
-  // ── Skill tag: fixed-height box, text centered both axes ────────────────────
-  // We use display:inline-block + explicit height + lineHeight equal to box height
-  // so the text is vertically centered, and all boxes sit on the same baseline.
-  const tagH = 20 // px – uniform box height
+  // ── Skill tag: perfectly aligned with equal height, centered text ──────────
+  // Using inline-table + table-cell:
+  // 1. Every box has equal 22px height and consistent spacing
+  // 2. Native vertical-align: middle centers text vertically with no top/bottom shift
+  // 3. text-align: center centers text horizontally with no left/right shift
   const renderTag = (skill: string, i: number) => (
     <span
       key={i}
       style={{
-        display: 'inline-block',
+        display: 'inline-table',
         verticalAlign: 'top',
-        height: `${tagH}px`,
-        lineHeight: `${tagH}px`,
-        textAlign: 'center',
         backgroundColor: 'rgba(255,255,255,0.18)',
-        paddingLeft: '8px',
-        paddingRight: '8px',
         borderRadius: '4px',
         fontSize: `${s.fontSize - 1.5}pt`,
-        marginRight: '4px',
-        marginBottom: '4px',
-        whiteSpace: 'nowrap',
+        marginRight: '5px',
+        marginBottom: '6px',
+        height: '22px',
         boxSizing: 'border-box'
       }}
     >
-      {skill}
+      <span
+        style={{
+          display: 'table-cell',
+          verticalAlign: 'middle',
+          textAlign: 'center',
+          paddingLeft: '8px',
+          paddingRight: '8px',
+          lineHeight: 1,
+          whiteSpace: 'nowrap',
+          color: '#ffffff',
+          fontWeight: 500
+        }}
+      >
+        {skill}
+      </span>
     </span>
   )
 
